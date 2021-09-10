@@ -91,6 +91,10 @@ export interface Props {
   className?: any,
   itemHeight?: number;
   scrollDivHeight?: number;
+  topDivClassName?: string;
+  popupClassName?: string;
+  itemClassName?: string;
+  sectionNameClassName?: string;
   handleSelect: ({ value, name }: { value: Choice[], name: string }) => void;
 }
 
@@ -109,6 +113,10 @@ const MultipleSelector: React.FC<Props> = ({
   style,
   itemHeight,
   scrollDivHeight,
+  topDivClassName,
+  popupClassName,
+  itemClassName,
+  sectionNameClassName,
   handleSelect,
 }) => {
   const classes = useStyles();
@@ -165,7 +173,7 @@ const MultipleSelector: React.FC<Props> = ({
   }, [checkedChoicess, choiceSections]);
 
   return (
-    <div ref={selectFieldRef} style={{ width: '100%', display: 'flex', ...style }}>
+    <div ref={selectFieldRef} style={{ width: '100%', display: 'flex', ...style }} className={topDivClassName}>
       <Tooltip
         title={checkedChoicess ? checkedChoicess?.map((choice) => choice.label).join(', ') : ''}
         placement="top"
@@ -217,6 +225,9 @@ const MultipleSelector: React.FC<Props> = ({
           handleSelect={handleSelectChoice}
           handleClose={handleClosePopup}
           handleClearAll={handleClearAll}
+          className={popupClassName}
+          itemClassName={itemClassName}
+          sectionNameClassName={sectionNameClassName}
         />
       )}
     </div>

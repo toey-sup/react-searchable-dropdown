@@ -94,6 +94,9 @@ export interface Props {
   id?: string;
   itemHeight?: number;
   scrollDivHeight?: number;
+  className?: string;
+  itemClassName?: string;
+  sectionNameClassName?: string;
   handleClose: (chosenChoice: {[key:string]: Choice | null}) => void;
   handleSelect: (value: Choice, isCheck: boolean) => void;
   handleClearAll: () => void;
@@ -108,6 +111,9 @@ const MultipleSelectorPopup: React.FC<Props> = ({
   id,
   itemHeight = DEFAULT_ITEM_HEIGHT,
   scrollDivHeight = DEFAULT_SCROLL_DIV_HEIGHT,
+  className,
+  itemClassName,
+  sectionNameClassName,
   handleClose,
   handleSelect,
   handleClearAll,
@@ -164,7 +170,7 @@ const MultipleSelectorPopup: React.FC<Props> = ({
       ref={popupRef}
     >
       <ClickAwayListener onClickAway={() => { handleClose(chosenChoice); }}>
-        <div className={classes.popUp}>
+        <div className={`${classes.popUp} ${className}`}>
           <TextField
             fullWidth
             placeholder="Search"
@@ -192,13 +198,14 @@ const MultipleSelectorPopup: React.FC<Props> = ({
               return (
               <div id={`${id}-${index}-choice-div`} style={{ ...style, height: itemHeight }}>
                 {(typeof choice === 'string')
-                  ? <Typography className={classes.sectionName}>{choice}</Typography>
+                  ? <Typography className={`${classes.sectionName} ${sectionNameClassName}`}>{choice}</Typography>
                   : (
                     <MultipleSectionItem
                       key={`item-${index + 1}`}
                       choice={choice}
                       checked={Boolean(chosenChoice[`${choice.singleChoice ? 'Single -' : ''}${choice?.id ?? choice.label}`])}
                       handleSelect={handleSelect}
+                      className={itemClassName}
                       id={id}
                     />
                   )}

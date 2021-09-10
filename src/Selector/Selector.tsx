@@ -91,6 +91,9 @@ export interface Props {
   itemHeight?: number;
   scrollDivHeight?: number;
   tooltip?: string;
+  topDivClassName?: string;
+  popupClassName?: string;
+  itemClassName?: string;
 }
 
 const Selector: React.FC<Props> = ({
@@ -110,6 +113,9 @@ const Selector: React.FC<Props> = ({
   itemHeight,
   scrollDivHeight,
   tooltip,
+  topDivClassName,
+  popupClassName,
+  itemClassName,
   handleSelect,
 }) => {
   const classes = useStyles();
@@ -124,7 +130,7 @@ const Selector: React.FC<Props> = ({
   };
 
   return (
-    <div ref={selectFieldRef} style={{ width: '100%', display: 'flex', ...style }}>
+    <div ref={selectFieldRef} style={{ width: '100%', display: 'flex', ...style }} className={topDivClassName}>
       <Tooltip
         title={tooltip ?? `${label ? `${labelPrefix || ''} ${label}` : ''}`}
         key={tooltip ?? `${labelPrefix || ''} ${label}`}
@@ -180,6 +186,8 @@ const Selector: React.FC<Props> = ({
         itemHeight={itemHeight}
         scrollDivHeight={scrollDivHeight}
         handleClose={handleClosePopup}
+        className={popupClassName}
+        itemClassName={itemClassName}
         id={id}
       />
       )}

@@ -85,12 +85,14 @@ export interface ChoiceSections {
 export interface Props {
   choice: Choice;
   id?:string;
+  className?: string;
   handleSelect: (choice: Choice) => void;
 }
 
 const SelectorItem: React.FC<Props> = memo(({
   choice,
   id,
+  className,
   handleSelect,
 }) => {
   const [lineWidth, setLineWidth] = useState<number>(0);
@@ -115,7 +117,7 @@ const SelectorItem: React.FC<Props> = memo(({
     >
       <div
         key={choice?.fieldName || choice?.label}
-        className={`${classes.choice}  ${(choice?.used) ? classes.usedChoice : ''}`}
+        className={`${classes.choice}  ${(choice?.used) ? classes.usedChoice : ''} ${className}`}
         onClick={() => {
           if (!choice?.used) handleSelect(choice);
         }}

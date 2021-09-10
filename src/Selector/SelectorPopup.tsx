@@ -56,6 +56,8 @@ export interface Props {
   itemHeight?: number;
   scrollDivHeight?: number;
   disablePortal?: boolean;
+  className?: string;
+  itemClassName?: string;
   handleClose: () => void;
   handleSelect: (value: { [key: string]: any }) => void;
 }
@@ -68,6 +70,8 @@ const SelectorPopup: React.FC<Props> = ({
   disablePortal,
   itemHeight = DEFAULT_ITEM_HEIGHT,
   scrollDivHeight = DEFAULT_SCROLL_DIV_HEIGHT,
+  className,
+  itemClassName,
   handleClose,
   handleSelect,
 }) => {
@@ -117,7 +121,7 @@ const SelectorPopup: React.FC<Props> = ({
         vertical: 'top',
         horizontal: 'center',
       }}
-      className={classes.popUp}
+      className={`${classes.popUp} ${className}`}
     >
       <TextField
         fullWidth
@@ -148,7 +152,7 @@ const SelectorPopup: React.FC<Props> = ({
             {(typeof choice === 'string')
               ? <Typography className={classes.sectionName}>{choice}</Typography>
               : (
-                <SelectorItem id={id} choice={choice} handleSelect={handleSelect} />
+                <SelectorItem id={id} choice={choice} handleSelect={handleSelect} className={itemClassName} />
               )}
           </div>
         )}}

@@ -86,6 +86,7 @@ export interface Props {
   choice: Choice;
   checked: boolean;
   id?: string;
+  className?: string;
   handleSelect: (choice: Choice, isCheck: boolean) => void;
 }
 
@@ -93,6 +94,7 @@ const MultipleSectionItem: FC<Props> = ({
   choice,
   checked,
   id,
+  className,
   handleSelect,
 }) => {
   const [lineWidth, setLineWidth] = useState<number>(0);
@@ -116,7 +118,7 @@ const MultipleSectionItem: FC<Props> = ({
     >
       <div
         key={choice?.fieldName || choice?.label}
-        className={`${classes.choice}  ${(choice.used) ? classes.usedChoice : ''}`}
+        className={`${classes.choice}  ${(choice.used) ? classes.usedChoice : ''} ${className}`}
         onClick={() => {
           if (!choice.used) handleSelect(choice, !checked);
         }}
