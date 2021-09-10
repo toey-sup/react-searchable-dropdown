@@ -94,6 +94,8 @@ export interface Props {
   topDivClassName?: string;
   popupClassName?: string;
   itemClassName?: string;
+  disableDropDownArrow?: boolean;
+  dropDownArrowClassName?: string;
 }
 
 const Selector: React.FC<Props> = ({
@@ -116,6 +118,8 @@ const Selector: React.FC<Props> = ({
   topDivClassName,
   popupClassName,
   itemClassName,
+  disableDropDownArrow,
+  dropDownArrowClassName,
   handleSelect,
 }) => {
   const classes = useStyles();
@@ -171,9 +175,9 @@ const Selector: React.FC<Props> = ({
                 </Typography>
               )}
           </div>
-          <div className={classes.expandIcon}>
+          {!disableDropDownArrow && <div className={`${classes.expandIcon} ${dropDownArrowClassName}`}>
             <ExpandMoreIcon style={{ fontSize: '15px' }} />
-          </div>
+          </div>}
         </button>
       </Tooltip>
       {open && selectFieldRef.current && (

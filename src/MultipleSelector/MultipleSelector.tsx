@@ -95,6 +95,8 @@ export interface Props {
   popupClassName?: string;
   itemClassName?: string;
   sectionNameClassName?: string;
+  disableDropDownArrow?: boolean;
+  dropDownArrowClassName?: string;
   handleSelect: ({ value, name }: { value: Choice[], name: string }) => void;
 }
 
@@ -117,6 +119,8 @@ const MultipleSelector: React.FC<Props> = ({
   popupClassName,
   itemClassName,
   sectionNameClassName,
+  disableDropDownArrow,
+  dropDownArrowClassName,
   handleSelect,
 }) => {
   const classes = useStyles();
@@ -207,9 +211,9 @@ const MultipleSelector: React.FC<Props> = ({
               )}
           </div>
           )}
-          <div className={classes.expandIcon}>
+          {!disableDropDownArrow && <div className={`${classes.expandIcon} ${dropDownArrowClassName}`}>
             <ExpandMoreIcon style={{ fontSize: '15px' }} />
-          </div>
+          </div>}
         </button>
       </Tooltip>
       {open && selectFieldRef.current &&  (
