@@ -5,9 +5,9 @@ import Popover from '@material-ui/core/Popover';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import useDebounce from 'src/useDebounce';
-import List from 'src/ListWIthId';
-import { DEFAULT_SCROLL_DIV_HEIGHT, DEFAULT_ITEM_HEIGHT } from 'src/const';
+import useDebounce from '../useDebounce';
+import List from '../ListWIthId';
+import { DEFAULT_SCROLL_DIV_HEIGHT, DEFAULT_ITEM_HEIGHT } from '../const';
 import SelectorItem, { ChoiceSections } from './SectionItem';
 
 
