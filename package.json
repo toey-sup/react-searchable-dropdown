@@ -1,17 +1,21 @@
 {
-  "name": "react-searchable-dropdown",
+  "name": "the-ultimate-and-the-best-react-searchable-dropdown",
   "version": "1.0.0",
   "description": "library for react dropdown",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "types": "lib/index.d.ts",
   "repository": "https://github.com/a526735a/react-searchable-dropdown.git",
   "author": "supanat",
   "license": "MIT",
   "scripts": {
-    "build": "yarn build:esm && yarn build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir lib/cjs",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "build": "rollup -c",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
