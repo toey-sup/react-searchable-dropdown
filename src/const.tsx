@@ -1,0 +1,3 @@
+export const DEFAULT_SCROLL_DIV_HEIGHT = 300;
+export const DEFAULT_ITEM_HEIGHT = 36;
+export const DEFAULT_ROW_HEIGHT = 40;

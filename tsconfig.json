@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "outDir": "lib/esm",
+    "target": "es6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "declaration": true,
+    "isolatedModules": true,
+    "noUnusedParameters": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
+    "jsx": "react-jsx",
+    "baseUrl": "."
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    ".eslintrc.js",
+    "./**/*.js",
+    "next-env.d.ts",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./custom.d.ts"
+  ]
+}
