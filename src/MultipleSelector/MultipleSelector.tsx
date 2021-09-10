@@ -122,8 +122,7 @@ const MultipleSelector: React.FC<Props> = ({
     if (submitChoices) {
       let selectedChoice = Object.keys(submitChoices).reduce((acc, choiceLabel) => (
         submitChoices[choiceLabel] ? [...acc, submitChoices[choiceLabel]] : acc), [])
-        .sort((a, b) => Number(b?.isGroup) - Number(a?.isGroup));
-      // handle if previously user select single choice (example: 'All Dealers')
+      // handle if previously user select single choice
       // and user not selecting new choices
       if (Object.keys(submitChoices).length === 0
         && checkedChoice
@@ -136,9 +135,9 @@ const MultipleSelector: React.FC<Props> = ({
   }, [checkedChoice, handleSelect, name]);
 
   const handleSelectChoice = (value: Choice, isCheck: boolean) => {
-    setChosenChoice({ ...chosenChoice, [`${value.isGroup ? 'Group -' : ''}${value.id ?? value.label}`]: (isCheck || value.singleChoice) ? value : null });
+    setChosenChoice({ ...chosenChoice, [`${value.id ?? value.label}`]: (isCheck || value.singleChoice) ? value : null });
     if (value.singleChoice) {
-      handleClosePopup({ [`${value.singleChoice ? 'Single -' : ''}${value.isGroup ? 'Group -' : ''}${value.id ?? value.label}`]: (isCheck || value.singleChoice) ? value : null });
+      handleClosePopup({ [`${value.singleChoice ? 'Single -' : ''}${value.id ?? value.label}`]: (isCheck || value.singleChoice) ? value : null });
     }
   };
 
@@ -151,13 +150,13 @@ const MultipleSelector: React.FC<Props> = ({
     if (checkedChoice && checkedChoice[0] && !checkedChoice[0].singleChoice) {
       checkedChoice.forEach((choice) => {
         if (choice.label.trim().length > 0) {
-          initChosenChoice[`${choice.singleChoice ? 'Single -' : ''}${choice.isGroup ? 'Group -' : ''}${choice.id ?? choice.label}`] = choice;
+          initChosenChoice[`${choice.singleChoice ? 'Single -' : ''}${choice.id ?? choice.label}`] = choice;
         }
       });
     }
     setChosenChoice(initChosenChoice);
     setMulChoiceSections(choiceSections.map((section) => ({
-      ...section, choices: section.choices.map((choice) => ({ ...choice, checked: Boolean(initChosenChoice[`${choice.singleChoice ? 'Single -' : ''}${choice.isGroup ? 'Group -' : ''}${choice.id ?? choice.label}`]) })),
+      ...section, choices: section.choices.map((choice) => ({ ...choice, checked: Boolean(initChosenChoice[`${choice.singleChoice ? 'Single -' : ''}${choice.id ?? choice.label}`]) })),
     })));
   }, [checkedChoice, choiceSections]);
 
@@ -189,16 +188,9 @@ const MultipleSelector: React.FC<Props> = ({
                 </Typography>
               )
               : (
-                <>
-                  {checkedChoice && checkedChoice[0]?.isGroup && (
-                  <Typography className={classes.groupTag}>
-                    {'Group: '}
-                  </Typography>
-                  )}
-                  <Typography variant="body1" className={classes.label} noWrap>
-                    {label}
-                  </Typography>
-                </>
+                <Typography variant="body1" className={classes.label} noWrap>
+                  {label}
+                </Typography>
               )}
           </div>
           )}

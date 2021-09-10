@@ -68,7 +68,6 @@ export interface Choice {
   used?: boolean;
   checked?: boolean;
   singleChoice?: boolean;
-  isGroup?: boolean;
   id?: string;
   [key: string]: any;
 }
