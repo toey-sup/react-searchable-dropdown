@@ -85,13 +85,13 @@ export interface Props {
   error?: boolean;
   placeholder?: string;
   disable?:boolean;
-  checkedChoice?: Choice[];
+  checkedChoicess?: Choice[];
   id?: string;
   style?: { [key:string]: any};
   className?: any,
   itemHeight?: number;
   scrollDivHeight?: number;
-  handleSelect: ({ value, name }: { value: any, name: string }) => void;
+  handleSelect: ({ value, name }: { value: Choice[], name: string }) => void;
 }
 
 const MultipleSelector: React.FC<Props> = ({
@@ -103,7 +103,7 @@ const MultipleSelector: React.FC<Props> = ({
   placeholder,
   selectDivPropsStyle,
   disable,
-  checkedChoice,
+  checkedChoicess,
   id,
   className,
   style,
@@ -120,19 +120,23 @@ const MultipleSelector: React.FC<Props> = ({
   const handleClosePopup = useCallback((submitChoices: {[key: string]: Choice | null}) => {
     setOpen(false);
     if (submitChoices) {
-      let selectedChoice = Object.keys(submitChoices).reduce((acc, choiceLabel) => (
-        submitChoices[choiceLabel] ? [...acc, submitChoices[choiceLabel]] : acc), [])
+      let selectedChoice = Object.keys(submitChoices).reduce((acc, choiceLabel) => {
+        const selectedChoice = submitChoices[choiceLabel];
+        return (
+          selectedChoice ? [...acc, selectedChoice] : acc
+        )
+      }, [])
       // handle if previously user select single choice
       // and user not selecting new choices
       if (Object.keys(submitChoices).length === 0
-        && checkedChoice
-        && checkedChoice[0]
-        && checkedChoice[0].singleChoice) {
-        selectedChoice = [checkedChoice[0]];
+        && checkedChoicess
+        && checkedChoicess[0]
+        && checkedChoicess[0].singleChoice) {
+        selectedChoice = [checkedChoicess[0]];
       }
       handleSelect({ value: selectedChoice, name: name ?? '' });
     }
-  }, [checkedChoice, handleSelect, name]);
+  }, [checkedChoicess, handleSelect, name]);
 
   const handleSelectChoice = (value: Choice, isCheck: boolean) => {
     setChosenChoice({ ...chosenChoice, [`${value.id ?? value.label}`]: (isCheck || value.singleChoice) ? value : null });
@@ -147,8 +151,8 @@ const MultipleSelector: React.FC<Props> = ({
 
   useEffect(() => {
     const initChosenChoice: { [key: string]: Choice } = {};
-    if (checkedChoice && checkedChoice[0] && !checkedChoice[0].singleChoice) {
-      checkedChoice.forEach((choice) => {
+    if (checkedChoicess && checkedChoicess[0] && !checkedChoicess[0].singleChoice) {
+      checkedChoicess.forEach((choice) => {
         if (choice.label.trim().length > 0) {
           initChosenChoice[`${choice.singleChoice ? 'Single -' : ''}${choice.id ?? choice.label}`] = choice;
         }
@@ -158,13 +162,14 @@ const MultipleSelector: React.FC<Props> = ({
     setMulChoiceSections(choiceSections.map((section) => ({
       ...section, choices: section.choices.map((choice) => ({ ...choice, checked: Boolean(initChosenChoice[`${choice.singleChoice ? 'Single -' : ''}${choice.id ?? choice.label}`]) })),
     })));
-  }, [checkedChoice, choiceSections]);
+  }, [checkedChoicess, choiceSections]);
 
   return (
     <div ref={selectFieldRef} style={{ width: '100%', display: 'flex', ...style }}>
       <Tooltip
-        title={checkedChoice ? checkedChoice?.map((choice) => choice.label).join(', ') : ''}
+        title={checkedChoicess ? checkedChoicess?.map((choice) => choice.label).join(', ') : ''}
         placement="top"
+        arrow
       >
         <button
           type="button"

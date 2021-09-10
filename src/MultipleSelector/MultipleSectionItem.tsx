@@ -34,6 +34,9 @@ const useStyles = makeStyles({
     },
     '&:hover': {
       backgroundColor: 'white !important',
+      '& $label': {
+        color: '#F3F3F3',
+      },
     },
   },
   checkbox: {

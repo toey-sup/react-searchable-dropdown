@@ -80,7 +80,7 @@ export interface Props {
   selectDivPropsStyle?: { [key:string]: any};
   style?: { [key:string]: any};
   className?: any,
-  handleSelect: ({ value, name }: { value: any, name: string }) => void;
+  handleSelect: ({ value, name }: { value: Choice, name: string }) => void;
   labelPrefix?: string;
   name?: string;
   error?: boolean;

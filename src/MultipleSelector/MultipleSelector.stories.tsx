@@ -1,14 +1,12 @@
-import { Meta } from "@storybook/react/types-6-0";
-import { Story } from "@storybook/react";
+import { useState } from 'react';
+import { storiesOf } from "@storybook/react";
 import MultipleSelector, { Props, Choice } from "./MultipleSelector";
+import { words } from '../../.storybook/const';
 
-const choices: Choice[] = [{ label: 'A', id: 'a' }, { label: 'B', id: 'b' }, { label: 'C', id: 'c' }, { label: 'D', id: 'd' }, { label: 'E', id: 'e' }, { label: 'F', id: 'f' }, { label: 'G', id: 'g' }, { label: 'H', id: 'h' }, { label: 'I', id: 'i' }, { label: 'J', id: 'j' }, { label: 'K', id: 'k' }, { label: 'L', id: 'l' }, { label: 'M', id: 'm' }, { label: 'N', id: 'n' }];
+const choices: Choice[] = words.map((word) => ({ label: word, id: word }));
 
-export default {
-  title: "Components/MultipleSelector",
-  component: MultipleSelector,
-  args: {
-    label: '',
+const defaultProps: Props = {
+  label: '',
     popUpKey: 'Mul-Selector-key',
     choiceSections: [{ choices }],
     name: 'Choice',
@@ -16,15 +14,84 @@ export default {
     id: 'Mul-Selector-id',
     handleSelect: ({ value, name }) => { console.log({ value, name })},
     style: { width: '300px' }
-  }
-} as Meta<Props>;
+};
 
-// Create a master template for mapping args to render the Button component
-const Template: Story<Props> = (args) => <MultipleSelector {...args} />;
+storiesOf("Multiple Selector", module)
+  .add("Normal Multiple Selector", () => {
+    function Parent({ children }: { children: any }) {
+      const [checkedChoices, setCheckedChoices] = useState<Choice[]>([]);
+      return <div>{children(checkedChoices, setCheckedChoices)}</div>;
+    }
+    return (
+      <Parent>
+        {(checkedChoices: Choice[], setCheckedChoices: (value: Choice[]) => void) => (
+          <MultipleSelector 
+            {...defaultProps}
+            label={(checkedChoices.length <= 1) ? checkedChoices[0]?.label || '' : `${checkedChoices[0]?.label} & ${checkedChoices.length - 1} More`}
+            checkedChoicess={checkedChoices}
+            handleSelect={({ value }: { value: Choice[]}) => { setCheckedChoices(value); }}
+          />
+        )}
+      </Parent>
+    );
+  })
+  .add("Multiple Selector With Single Choice", () => {
+    function Parent({ children }: { children: any }) {
+      const [checkedChoices, setCheckedChoices] = useState<Choice[]>([]);
+      return <div>{children(checkedChoices, setCheckedChoices)}</div>;
+    }
+    return (
+      <Parent>
+        {(checkedChoices: Choice[], setCheckedChoices: (value: Choice[]) => void) => (
+          <MultipleSelector 
+            {...defaultProps}
+            label={(checkedChoices.length <= 1) ? checkedChoices[0]?.label || '' : `${checkedChoices[0]?.label} & ${checkedChoices.length - 1} More`}
+            checkedChoicess={checkedChoices}
+            handleSelect={({ value }: { value: Choice[]}) => { setCheckedChoices(value); }}
+            choiceSections={[{ sectionName: 'Single Choice', choices: [{ label: 'Special One', singleChoice: true }]}, { sectionName: 'Multiple Choice', choices: choices }]}
+          />
+        )}
+      </Parent>
+    );
+  })
+  .add("Multiple Selector With Section Prefix", () => {
+    function Parent({ children }: { children: any }) {
+      const [checkedChoices, setCheckedChoices] = useState<Choice[]>([]);
+      return <div>{children(checkedChoices, setCheckedChoices)}</div>;
+    }
+    return (
+      <Parent>
+        {(checkedChoices: Choice[], setCheckedChoices: (value: Choice[]) => void) => (
+          <MultipleSelector 
+            {...defaultProps}
+            label={(checkedChoices.length <= 1) ? checkedChoices[0]?.label || '' : `${checkedChoices[0]?.label} & ${checkedChoices.length - 1} More`}
+            checkedChoicess={checkedChoices}
+            handleSelect={({ value }: { value: Choice[]}) => { setCheckedChoices(value); }}
+            choiceSections={[{ sectionName: 'Single Choice', sectionPrefix: 'single-prefix', choices: [{ label: 'Special One', singleChoice: true }]}, { sectionName: 'Multiple Choice', choices: choices, sectionPrefix: 'mul-prefix' }]}
+          />
+        )}
+      </Parent>
+    );
+  })
+  .add("Selector With Used Choices", () => {
+    function Parent({ children }: { children: any }) {
+      const [checkedChoices, setCheckedChoices] = useState<Choice[]>([]);
+      return <div>{children(checkedChoices, setCheckedChoices)}</div>;
+    }
+    return (
+      <Parent>
+        {(checkedChoices: Choice[], setCheckedChoices: (value: Choice[]) => void) => (
+          <MultipleSelector 
+            {...defaultProps}
+            label={(checkedChoices.length <= 1) ? checkedChoices[0]?.label || '' : `${checkedChoices[0]?.label} & ${checkedChoices.length - 1} More`}
+            checkedChoicess={checkedChoices}
+            handleSelect={({ value }: { value: Choice[]}) => { setCheckedChoices(value); }}
+            choiceSections={[{ choices: words.map((word, index) => ({ label: word, id: word, used: index < 10 })) }]}
+          />
+        )}
+      </Parent>
+    );
+  })
 
-// Reuse that template for creating different stories
-export const Normal = Template.bind({});
-export const WithSingleChoice = Template.bind({});
-WithSingleChoice.args = { ...Normal.args, choiceSections: [{ sectionName: 'Single Choice', choices: [{ label: 'Special One', singleChoice: true }]}, { sectionName: 'Multiple Choice', choices: choices }] };
-export const WithSectionPrefix =  Template.bind({});
-WithSectionPrefix.args = { ...Normal.args, choiceSections: [{ sectionName: 'Single Choice', sectionPrefix: 'single-prefix', choices: [{ label: 'Special One', singleChoice: true }]}, { sectionName: 'Multiple Choice', choices: choices, sectionPrefix: 'mul-prefix' }] };
+
+
