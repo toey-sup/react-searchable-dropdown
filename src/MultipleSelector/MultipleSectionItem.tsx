@@ -54,6 +54,7 @@ const useStyles = makeStyles({
     whiteSpace: 'break-spaces',
     fontStyle: 'italic',
     userSelect: 'none',
+    marginRight: '10px',
   },
   label: {
     userSelect: 'none',
