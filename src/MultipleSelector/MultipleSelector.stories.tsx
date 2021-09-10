@@ -1,97 +1,50 @@
 import { useState } from 'react';
-import { storiesOf } from "@storybook/react";
+import { Story } from "@storybook/react";
 import MultipleSelector, { Props, Choice } from "./MultipleSelector";
+import { Meta } from "@storybook/react/types-6-0";
 import { words } from '../../.storybook/const';
 
 const choices: Choice[] = words.map((word) => ({ label: word, id: word }));
 
-const defaultProps: Props = {
-  label: '',
-    popUpKey: 'Mul-Selector-key',
+export default {
+  title: "Components/MultipleSelector",
+  component: MultipleSelector,
+  args: {
+    label: '',
+    popUpKey: 'MultipleSelector-key',
     choiceSections: [{ choices }],
     name: 'Choice',
-    placeholder: 'please select choices',
-    id: 'Mul-Selector-id',
+    placeholder: 'please select a choice',
+    id: 'MultipleSelector-id',
     handleSelect: ({ value, name }) => { console.log({ value, name })},
     style: { width: '300px' }
+  },
+  argTypes: {
+    handleSelect: { action: 'clicked' },
+  }
+} as Meta<Props>;
+
+
+const Template: Story<Props> = (args) => {
+  const [checkedChoices, setCheckedChoices] = useState<Choice[]>([]);
+  return (
+    <MultipleSelector
+      {...args}
+      label={(checkedChoices.length <= 1) ? checkedChoices[0]?.label || '' : `${checkedChoices[0]?.label} & ${checkedChoices.length - 1} More`}
+      handleSelect={({ value, name }: { value: Choice[], name: string}) => { setCheckedChoices(value); console.log({ value, name })}}
+      checkedChoicess={checkedChoices}
+      />
+  );
 };
 
-storiesOf("Multiple Selector", module)
-  .add("Normal Multiple Selector", () => {
-    function Parent({ children }: { children: any }) {
-      const [checkedChoices, setCheckedChoices] = useState<Choice[]>([]);
-      return <div>{children(checkedChoices, setCheckedChoices)}</div>;
-    }
-    return (
-      <Parent>
-        {(checkedChoices: Choice[], setCheckedChoices: (value: Choice[]) => void) => (
-          <MultipleSelector 
-            {...defaultProps}
-            label={(checkedChoices.length <= 1) ? checkedChoices[0]?.label || '' : `${checkedChoices[0]?.label} & ${checkedChoices.length - 1} More`}
-            checkedChoicess={checkedChoices}
-            handleSelect={({ value }: { value: Choice[]}) => { setCheckedChoices(value); }}
-          />
-        )}
-      </Parent>
-    );
-  })
-  .add("Multiple Selector With Single Choice", () => {
-    function Parent({ children }: { children: any }) {
-      const [checkedChoices, setCheckedChoices] = useState<Choice[]>([]);
-      return <div>{children(checkedChoices, setCheckedChoices)}</div>;
-    }
-    return (
-      <Parent>
-        {(checkedChoices: Choice[], setCheckedChoices: (value: Choice[]) => void) => (
-          <MultipleSelector 
-            {...defaultProps}
-            label={(checkedChoices.length <= 1) ? checkedChoices[0]?.label || '' : `${checkedChoices[0]?.label} & ${checkedChoices.length - 1} More`}
-            checkedChoicess={checkedChoices}
-            handleSelect={({ value }: { value: Choice[]}) => { setCheckedChoices(value); }}
-            choiceSections={[{ sectionName: 'Single Choice', choices: [{ label: 'Special One', singleChoice: true }]}, { sectionName: 'Multiple Choice', choices: choices }]}
-          />
-        )}
-      </Parent>
-    );
-  })
-  .add("Multiple Selector With Section Prefix", () => {
-    function Parent({ children }: { children: any }) {
-      const [checkedChoices, setCheckedChoices] = useState<Choice[]>([]);
-      return <div>{children(checkedChoices, setCheckedChoices)}</div>;
-    }
-    return (
-      <Parent>
-        {(checkedChoices: Choice[], setCheckedChoices: (value: Choice[]) => void) => (
-          <MultipleSelector 
-            {...defaultProps}
-            label={(checkedChoices.length <= 1) ? checkedChoices[0]?.label || '' : `${checkedChoices[0]?.label} & ${checkedChoices.length - 1} More`}
-            checkedChoicess={checkedChoices}
-            handleSelect={({ value }: { value: Choice[]}) => { setCheckedChoices(value); }}
-            choiceSections={[{ sectionName: 'Single Choice', sectionPrefix: 'single-prefix', choices: [{ label: 'Special One', singleChoice: true }]}, { sectionName: 'Multiple Choice', choices: choices, sectionPrefix: 'mul-prefix' }]}
-          />
-        )}
-      </Parent>
-    );
-  })
-  .add("Selector With Used Choices", () => {
-    function Parent({ children }: { children: any }) {
-      const [checkedChoices, setCheckedChoices] = useState<Choice[]>([]);
-      return <div>{children(checkedChoices, setCheckedChoices)}</div>;
-    }
-    return (
-      <Parent>
-        {(checkedChoices: Choice[], setCheckedChoices: (value: Choice[]) => void) => (
-          <MultipleSelector 
-            {...defaultProps}
-            label={(checkedChoices.length <= 1) ? checkedChoices[0]?.label || '' : `${checkedChoices[0]?.label} & ${checkedChoices.length - 1} More`}
-            checkedChoicess={checkedChoices}
-            handleSelect={({ value }: { value: Choice[]}) => { setCheckedChoices(value); }}
-            choiceSections={[{ choices: words.map((word, index) => ({ label: word, id: word, used: index < 10 })) }]}
-          />
-        )}
-      </Parent>
-    );
-  })
+export const NormalMultipleSelector = Template.bind({});
+NormalMultipleSelector.args = { ...Template.args };
 
+export const MultipleSelectorWithSingleChoice = Template.bind({});
+MultipleSelectorWithSingleChoice.args = { ...Template.args, choiceSections:[{ sectionName: 'Single Choice', choices: [{ label: 'Special One', singleChoice: true }]}, { sectionName: 'Multiple Choice', choices: choices }]};
 
+export const MultipleSelectorWithSectionPrefix = Template.bind({});
+MultipleSelectorWithSectionPrefix.args = { ...Template.args, choiceSections: [{ sectionName: 'Single Choice', sectionPrefix: 'single-prefix', choices: [{ label: 'Special One', singleChoice: true }]}, { sectionName: 'Multiple Choice', choices: choices, sectionPrefix: 'mul-prefix' }] };
 
+export const MultipleSelectorWithUsedChoices = Template.bind({});
+MultipleSelectorWithUsedChoices.args = { ...Template.args, choicesSections: [{ choices: words.map((word, index) => ({ label: word, id: word, used: index < 10 })) }] };
