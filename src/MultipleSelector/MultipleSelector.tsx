@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Tooltip from '@material-ui/core/Tooltip';
-import { ChoiceSections, Choice } from './MultipleSectionItem';
+import { ChoiceSection, Choice } from './MultipleSectionItem';
 import MultipleSelectorPopup, { SearchTextFieldProps, SearchTextFieldInputProps } from './MultipleSelectorPopup';
 
 const useStyles = makeStyles({
@@ -79,7 +79,7 @@ const useStyles = makeStyles({
 export interface Props {
   label: string;
   popUpKey: string;
-  choiceSections: ChoiceSections[];
+  choiceSections: ChoiceSection[];
   selectDivPropsStyle?: { [key:string]: any};
   name?: string;
   error?: boolean;
@@ -132,7 +132,7 @@ const MultipleSelector: React.FC<Props> = ({
   const classes = useStyles();
   const [open, setOpen] = useState<boolean>(false);
   const [chosenChoice, setChosenChoice] = useState<{[key: string]: Choice | null}>({});
-  const [mulChoiceSections, setMulChoiceSections] = useState<ChoiceSections[]>([...choiceSections]);
+  const [mulChoiceSections, setMulChoiceSections] = useState<ChoiceSection[]>([...choiceSections]);
   const selectFieldRef = useRef<HTMLDivElement>(null);
 
   const handleClosePopup = useCallback((submitChoices: {[key: string]: Choice | null}) => {
@@ -246,5 +246,5 @@ const MultipleSelector: React.FC<Props> = ({
   );
 };
 
-export type { ChoiceSections, Choice, SearchTextFieldProps, SearchTextFieldInputProps };
+export type { ChoiceSection, Choice, SearchTextFieldProps, SearchTextFieldInputProps };
 export default MultipleSelector;

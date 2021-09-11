@@ -13,7 +13,7 @@ import useDebounce from '../useDebounce';
 import List from '../ListWIthId';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { DEFAULT_SCROLL_DIV_HEIGHT, DEFAULT_ITEM_HEIGHT } from '../const';
-import MultipleSectionItem, { ChoiceSections, Choice } from './MultipleSectionItem';
+import MultipleSectionItem, { ChoiceSection, Choice } from './MultipleSectionItem';
 
 const useStyles = makeStyles({
   popOver: {
@@ -96,7 +96,7 @@ export interface Props {
   chosenChoice: {[key:string]: Choice | null};
   popUpKey: string;
   anchorEl: HTMLDivElement;
-  choiceSections: ChoiceSections[];
+  choiceSections: ChoiceSection[];
   id?: string;
   itemHeight?: number;
   scrollDivHeight?: number;
@@ -141,7 +141,7 @@ const MultipleSelectorPopup: React.FC<Props> = ({
     .filter((value) => Boolean(value))
     .length;
 
-  const filterChoices = (section: ChoiceSections, searchString: string) => {
+  const filterChoices = (section: ChoiceSection, searchString: string) => {
     const sectionChoices = section.choices.reduce((acc, choice) => {
       if (new RegExp(`${searchString.replace(/\[|\]|\(|\)|\+|-|\*|\\|\?|\^|\$/g, (e) => (`\\${e}`))}`, 'i').test(choice.label)) {
         return [...acc, { ...choice, sectionPrefix: section.sectionPrefix }];
@@ -155,7 +155,7 @@ const MultipleSelectorPopup: React.FC<Props> = ({
   };
 
   const choices = choiceSections
-    .reduce((acc, section: ChoiceSections) => {
+    .reduce((acc, section: ChoiceSection) => {
       const filteredSection = filterChoices(section, debouncedSearchWord);
       return filteredSection ? [...acc, ...filteredSection] : acc;
     }, []);

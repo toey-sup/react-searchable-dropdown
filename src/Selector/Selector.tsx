@@ -4,7 +4,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SelectorPopup, { SearchTextFieldInputProps, SearchTextFieldProps } from './SelectorPopup';
-import { ChoiceSections, Choice } from './SectionItem';
+import { ChoiceSection, Choice } from './SectionItem';
 
 const useStyles = makeStyles({
   selectDiv: {
@@ -76,7 +76,7 @@ const useStyles = makeStyles({
 export interface Props {
   label: string;
   popUpKey: string;
-  choiceSections: ChoiceSections[];
+  choiceSections: ChoiceSection[];
   selectDivPropsStyle?: { [key:string]: any};
   style?: { [key:string]: any};
   className?: any,
@@ -210,5 +210,5 @@ const Selector: React.FC<Props> = ({
   );
 };
 
-export type { Choice, ChoiceSections };
+export type { Choice, ChoiceSection };
 export default Selector;

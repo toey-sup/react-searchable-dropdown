@@ -11,7 +11,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import useDebounce from '../useDebounce';
 import List from '../ListWIthId';
 import { DEFAULT_SCROLL_DIV_HEIGHT, DEFAULT_ITEM_HEIGHT } from '../const';
-import SelectorItem, { ChoiceSections } from './SectionItem';
+import SelectorItem, { ChoiceSection } from './SectionItem';
 
 
 const useStyles = makeStyles({
@@ -56,7 +56,7 @@ export type SearchTextFieldProps = TextFieldProps;
 
 export interface Props {
   popUpKey: string;
-  choiceSections: ChoiceSections[];
+  choiceSections: ChoiceSection[];
   anchorEl: HTMLDivElement;
   id?: string;
   itemHeight?: number;
@@ -95,7 +95,7 @@ const SelectorPopup: React.FC<Props> = ({
     setSearchWord(e.target.value);
   };
 
-  const filterChoices = (section: ChoiceSections, searchString: string) => {
+  const filterChoices = (section: ChoiceSection, searchString: string) => {
     const sectionChoices = section.choices.reduce((acc, choice) => {
       if (new RegExp(`${searchString.replace(/\[|\]|\(|\)|\+|-|\*|\\|\?|\^|\$/g, (e) => (`\\${e}`))}`, 'i').test(choice.label)) {
         return [...acc, { ...choice, sectionPrefix: section.sectionPrefix }];
@@ -109,7 +109,7 @@ const SelectorPopup: React.FC<Props> = ({
   };
 
   const choices = choiceSections
-    .reduce((acc, section: ChoiceSections) => {
+    .reduce((acc, section: ChoiceSection) => {
       const filteredSection = filterChoices(section, debouncedSearchWord);
       return filteredSection ? [...acc, ...filteredSection] : acc;
     }, []);
