@@ -77,9 +77,10 @@ export interface Props {
   label: string;
   popUpKey: string;
   choiceSections: ChoiceSection[];
-  selectDivPropsStyle?: { [key:string]: any};
-  style?: { [key:string]: any};
+  style?: React.CSSProperties;
   className?: any,
+  selectDivClassName?: string;
+  selectDivPropsStyle?: React.CSSProperties;
   handleSelect: ({ value, name }: { value: Choice, name: string }) => void;
   labelPrefix?: string;
   name?: string;
@@ -91,7 +92,6 @@ export interface Props {
   itemHeight?: number;
   scrollDivHeight?: number;
   tooltip?: string;
-  topDivClassName?: string;
   popupClassName?: string;
   sectionNameClassName?: string;
   itemClassName?: string;
@@ -110,16 +110,16 @@ const Selector: React.FC<Props> = ({
   error,
   choiceSections,
   placeholder,
-  selectDivPropsStyle,
-  className,
   style,
+  className,
+  selectDivPropsStyle,
+  selectDivClassName,
   disable,
   id,
   disablePortal,
   itemHeight,
   scrollDivHeight,
   tooltip,
-  topDivClassName,
   popupClassName,
   itemClassName,
   sectionNameClassName,
@@ -142,7 +142,7 @@ const Selector: React.FC<Props> = ({
   };
 
   return (
-    <div ref={selectFieldRef} style={{ width: '100%', display: 'flex', ...style }} className={topDivClassName}>
+    <div ref={selectFieldRef} style={{ width: '100%', display: 'flex', ...style }} className={className}>
       <Tooltip
         title={tooltip ?? `${label ? `${labelPrefix || ''} ${label}` : ''}`}
         key={tooltip ?? `${labelPrefix || ''} ${label}`}
@@ -159,7 +159,7 @@ const Selector: React.FC<Props> = ({
           ${open ? classes.openSelect : ''}
           ${error ? classes.errorDiv : ''}
           ${disable ? classes.disabled : ''}
-          ${className}
+          ${selectDivClassName}
         `}
           style={selectDivPropsStyle}
           onClick={() => setOpen(true)}

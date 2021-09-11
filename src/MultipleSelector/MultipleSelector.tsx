@@ -80,18 +80,18 @@ export interface Props {
   label: string;
   popUpKey: string;
   choiceSections: ChoiceSection[];
-  selectDivPropsStyle?: { [key:string]: any};
   name?: string;
   error?: boolean;
   placeholder?: string;
   disable?:boolean;
   checkedChoicess?: Choice[];
   id?: string;
-  style?: { [key:string]: any};
+  style?: React.CSSProperties;
   className?: any,
+  selectDivPropsStyle?: React.CSSProperties;
+  selectDivClassName?: string;
   itemHeight?: number;
   scrollDivHeight?: number;
-  topDivClassName?: string;
   popupClassName?: string;
   itemClassName?: string;
   sectionNameClassName?: string;
@@ -110,15 +110,15 @@ const MultipleSelector: React.FC<Props> = ({
   error,
   choiceSections,
   placeholder,
-  selectDivPropsStyle,
   disable,
   checkedChoicess,
   id,
   className,
   style,
+  selectDivPropsStyle,
+  selectDivClassName,
   itemHeight,
   scrollDivHeight,
-  topDivClassName,
   popupClassName,
   itemClassName,
   sectionNameClassName,
@@ -183,7 +183,7 @@ const MultipleSelector: React.FC<Props> = ({
   }, [checkedChoicess, choiceSections]);
 
   return (
-    <div ref={selectFieldRef} style={{ width: '100%', display: 'flex', ...style }} className={topDivClassName}>
+    <div ref={selectFieldRef} style={{ width: '100%', display: 'flex', ...style }} className={className}>
       <Tooltip
         title={checkedChoicess ? checkedChoicess?.map((choice) => choice.label).join(', ') : ''}
         placement="top"
@@ -196,7 +196,7 @@ const MultipleSelector: React.FC<Props> = ({
           ${open ? classes.openSelect : ''}
           ${error ? classes.errorDiv : ''}
           ${disable ? classes.disabled : ''}
-          ${className}
+          ${selectDivClassName}
         `}
           style={selectDivPropsStyle}
           onClick={() => setOpen(true)}
