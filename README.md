@@ -1,4 +1,4 @@
-# react-searchable-dropdown 1.0.4
+# react-searchable-dropdown 1.0.5
 
 ## How to install
 
