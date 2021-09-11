@@ -13,8 +13,7 @@ yarn add the-ultimate-and-the-best-react-searchable-dropdown
 
 ## Story Book Demo
 
-https://613c0ae26a019e003a9d89ed-izjxtolrre.chromatic.com/
-
+https://613c0ae26a019e003a9d89ed-hpjlfbrniz.chromatic.com/
 ## Component Info
 
 There are MultipleSelector and Selector dropdown component, both are handle long list of choices by using lib react-window (https://github.com/bvaughn/react-window) and using style and component from material-ui (https://material-ui.com/)
