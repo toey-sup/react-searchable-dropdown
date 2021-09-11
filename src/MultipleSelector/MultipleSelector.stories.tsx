@@ -32,7 +32,7 @@ const Template: Story<Props> = (args) => {
       {...args}
       label={(checkedChoices.length <= 1) ? checkedChoices[0]?.label || '' : `${checkedChoices[0]?.label} & ${checkedChoices.length - 1} More`}
       handleSelect={({ value, name }: { value: Choice[], name: string}) => { setCheckedChoices(value); console.log({ value, name })}}
-      checkedChoicess={checkedChoices}
+      checkedChoices={checkedChoices}
       />
   );
 };

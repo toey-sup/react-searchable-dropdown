@@ -84,7 +84,7 @@ export interface Props {
   error?: boolean;
   placeholder?: string;
   disable?:boolean;
-  checkedChoicess?: Choice[];
+  checkedChoices?: Choice[];
   id?: string;
   style?: React.CSSProperties;
   className?: string,
@@ -111,7 +111,7 @@ const MultipleSelector: React.FC<Props> = ({
   choiceSections,
   placeholder,
   disable,
-  checkedChoicess,
+  checkedChoices,
   id,
   className,
   style,
@@ -147,14 +147,14 @@ const MultipleSelector: React.FC<Props> = ({
       // handle if previously user select single choice
       // and user not selecting new choices
       if (Object.keys(submitChoices).length === 0
-        && checkedChoicess
-        && checkedChoicess[0]
-        && checkedChoicess[0].singleChoice) {
-        selectedChoice = [checkedChoicess[0]];
+        && checkedChoices
+        && checkedChoices[0]
+        && checkedChoices[0].singleChoice) {
+        selectedChoice = [checkedChoices[0]];
       }
       handleSelect({ value: selectedChoice, name: name ?? '' });
     }
-  }, [checkedChoicess, handleSelect, name]);
+  }, [checkedChoices, handleSelect, name]);
 
   const handleSelectChoice = (value: Choice, isCheck: boolean) => {
     setChosenChoice({ ...chosenChoice, [`${value.id ?? value.label}`]: (isCheck || value.singleChoice) ? value : null });
@@ -169,8 +169,8 @@ const MultipleSelector: React.FC<Props> = ({
 
   useEffect(() => {
     const initChosenChoice: { [key: string]: Choice } = {};
-    if (checkedChoicess && checkedChoicess[0] && !checkedChoicess[0].singleChoice) {
-      checkedChoicess.forEach((choice) => {
+    if (checkedChoices && checkedChoices[0] && !checkedChoices[0].singleChoice) {
+      checkedChoices.forEach((choice) => {
         if (choice.label.trim().length > 0) {
           initChosenChoice[`${choice.singleChoice ? 'Single -' : ''}${choice.id ?? choice.label}`] = choice;
         }
@@ -180,12 +180,12 @@ const MultipleSelector: React.FC<Props> = ({
     setMulChoiceSections(choiceSections.map((section) => ({
       ...section, choices: section.choices.map((choice) => ({ ...choice, checked: Boolean(initChosenChoice[`${choice.singleChoice ? 'Single -' : ''}${choice.id ?? choice.label}`]) })),
     })));
-  }, [checkedChoicess, choiceSections]);
+  }, [checkedChoices, choiceSections]);
 
   return (
     <div ref={selectFieldRef} style={{ width: '100%', display: 'flex', ...style }} className={className}>
       <Tooltip
-        title={checkedChoicess ? checkedChoicess?.map((choice) => choice.label).join(', ') : ''}
+        title={checkedChoices ? checkedChoices?.map((choice) => choice.label).join(', ') : ''}
         placement="top"
         arrow
       >
