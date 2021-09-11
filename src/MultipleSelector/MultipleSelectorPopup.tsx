@@ -2,7 +2,10 @@ import React, { useState, useRef, ChangeEvent } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Popover from '@material-ui/core/Popover';
-import TextField from '@material-ui/core/TextField';
+import TextField, { TextFieldProps } from '@material-ui/core/TextField';
+import { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
+import { FilledInputProps } from '@material-ui/core/FilledInput';
+import { InputProps } from '@material-ui/core/Input';
 import SearchIcon from '@material-ui/icons/Search';
 import Divider from '@material-ui/core/Divider';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -85,6 +88,9 @@ const useStyles = makeStyles({
   },
 });
 
+export type SearchTextFieldInputProps = Partial<InputProps> | Partial<FilledInputProps> | Partial<OutlinedInputProps>;
+export type SearchTextFieldProps = TextFieldProps;
+
 export interface Props {
   name: string;
   chosenChoice: {[key:string]: Choice | null};
@@ -97,6 +103,8 @@ export interface Props {
   className?: string;
   itemClassName?: string;
   sectionNameClassName?: string;
+  searchTextFieldProps?: SearchTextFieldProps;
+  searchTextFieldInputProps?: SearchTextFieldInputProps;
   handleClose: (chosenChoice: {[key:string]: Choice | null}) => void;
   handleSelect: (value: Choice, isCheck: boolean) => void;
   handleClearAll: () => void;
@@ -114,6 +122,8 @@ const MultipleSelectorPopup: React.FC<Props> = ({
   className,
   itemClassName,
   sectionNameClassName,
+  searchTextFieldProps,
+  searchTextFieldInputProps,
   handleClose,
   handleSelect,
   handleClearAll,
@@ -179,10 +189,12 @@ const MultipleSelectorPopup: React.FC<Props> = ({
               disableUnderline: true,
               classes: { input: classes.input },
               endAdornment: <InputAdornment position="start"><SearchIcon style={{ fontSize: '18px' }} /></InputAdornment>,
+              ...searchTextFieldInputProps,
             }}
             onChange={handleSeaching}
             id={`${id}-seach-textfield`}
             autoComplete="off"
+            {...searchTextFieldProps}
           />
           <List
             height={listHeight}

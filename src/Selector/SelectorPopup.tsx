@@ -2,7 +2,10 @@ import React, { useState, ChangeEvent } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Popover from '@material-ui/core/Popover';
-import TextField from '@material-ui/core/TextField';
+import TextField, { TextFieldProps } from '@material-ui/core/TextField';
+import { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
+import { FilledInputProps } from '@material-ui/core/FilledInput';
+import { InputProps } from '@material-ui/core/Input';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import useDebounce from '../useDebounce';
@@ -48,6 +51,9 @@ const useStyles = makeStyles({
   },
 });
 
+export type SearchTextFieldInputProps = Partial<InputProps> | Partial<FilledInputProps> | Partial<OutlinedInputProps>;
+export type SearchTextFieldProps = TextFieldProps;
+
 export interface Props {
   popUpKey: string;
   choiceSections: ChoiceSections[];
@@ -58,6 +64,9 @@ export interface Props {
   disablePortal?: boolean;
   className?: string;
   itemClassName?: string;
+  sectionNameClassName?: string;
+  searchTextfieldProps?: SearchTextFieldProps;
+  searchTextFieldInputProps?: SearchTextFieldInputProps;
   handleClose: () => void;
   handleSelect: (value: { [key: string]: any }) => void;
 }
@@ -72,6 +81,9 @@ const SelectorPopup: React.FC<Props> = ({
   scrollDivHeight = DEFAULT_SCROLL_DIV_HEIGHT,
   className,
   itemClassName,
+  sectionNameClassName,
+  searchTextfieldProps,
+  searchTextFieldInputProps,
   handleClose,
   handleSelect,
 }) => {
@@ -131,10 +143,12 @@ const SelectorPopup: React.FC<Props> = ({
           disableUnderline: true,
           classes: { input: classes.input },
           endAdornment: <InputAdornment position="start"><SearchIcon style={{ fontSize: '18px' }} /></InputAdornment>,
+          ...searchTextFieldInputProps,
         }}
         onChange={handleSeaching}
         id={`${id}-seach-field`}
         autoComplete="off"
+        {...searchTextfieldProps}
       />
       <List
         height={listHeight}
@@ -150,7 +164,7 @@ const SelectorPopup: React.FC<Props> = ({
           return (
           <div id={`${id}-${index}-choice-div`} style={{ ...style, height: itemHeight }}>
             {(typeof choice === 'string')
-              ? <Typography className={classes.sectionName}>{choice}</Typography>
+              ? <Typography className={`${classes.sectionName} ${sectionNameClassName}`}>{choice}</Typography>
               : (
                 <SelectorItem id={id} choice={choice} handleSelect={handleSelect} className={itemClassName} />
               )}

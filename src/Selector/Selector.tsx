@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import SelectorPopup from './SelectorPopup';
+import SelectorPopup, { SearchTextFieldInputProps, SearchTextFieldProps } from './SelectorPopup';
 import { ChoiceSections, Choice } from './SectionItem';
 
 const useStyles = makeStyles({
@@ -93,9 +93,13 @@ export interface Props {
   tooltip?: string;
   topDivClassName?: string;
   popupClassName?: string;
+  sectionNameClassName?: string;
   itemClassName?: string;
   disableDropDownArrow?: boolean;
   dropDownArrowClassName?: string;
+  dropDownArrowComponent?: React.ReactNode;
+  searchTextfieldProps?: SearchTextFieldProps;
+  searchTextFieldInputProps?: SearchTextFieldInputProps;
 }
 
 const Selector: React.FC<Props> = ({
@@ -118,8 +122,12 @@ const Selector: React.FC<Props> = ({
   topDivClassName,
   popupClassName,
   itemClassName,
+  sectionNameClassName,
   disableDropDownArrow,
   dropDownArrowClassName,
+  dropDownArrowComponent,
+  searchTextfieldProps,
+  searchTextFieldInputProps,
   handleSelect,
 }) => {
   const classes = useStyles();
@@ -176,7 +184,7 @@ const Selector: React.FC<Props> = ({
               )}
           </div>
           {!disableDropDownArrow && <div className={`${classes.expandIcon} ${dropDownArrowClassName}`}>
-            <ExpandMoreIcon style={{ fontSize: '15px' }} />
+            {dropDownArrowComponent || <ExpandMoreIcon style={{ fontSize: '15px' }} />}
           </div>}
         </button>
       </Tooltip>
@@ -192,6 +200,9 @@ const Selector: React.FC<Props> = ({
         handleClose={handleClosePopup}
         className={popupClassName}
         itemClassName={itemClassName}
+        searchTextfieldProps={searchTextfieldProps}
+        sectionNameClassName={sectionNameClassName}
+        searchTextFieldInputProps={searchTextFieldInputProps}
         id={id}
       />
       )}
