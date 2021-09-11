@@ -79,7 +79,7 @@ export interface Choice {
 export interface ChoiceSection {
   choices: Choice[];
   sectionName?: string;
-  sectionPrefix?: any;
+  sectionPrefix?: string;
 }
 
 export interface Props {

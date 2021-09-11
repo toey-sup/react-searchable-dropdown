@@ -87,7 +87,7 @@ export interface Props {
   checkedChoicess?: Choice[];
   id?: string;
   style?: React.CSSProperties;
-  className?: any,
+  className?: string,
   selectDivPropsStyle?: React.CSSProperties;
   selectDivClassName?: string;
   itemHeight?: number;
