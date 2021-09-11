@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Tooltip from '@material-ui/core/Tooltip';
 import { ChoiceSections, Choice } from './MultipleSectionItem';
-import MultipleSelectorPopup from './MultipleSelectorPopup';
+import MultipleSelectorPopup, { SearchTextFieldProps, SearchTextFieldInputProps } from './MultipleSelectorPopup';
 
 const useStyles = makeStyles({
   selectDiv: {
@@ -97,6 +97,9 @@ export interface Props {
   sectionNameClassName?: string;
   disableDropDownArrow?: boolean;
   dropDownArrowClassName?: string;
+  dropDownArrowComponent?: HTMLElement;
+  searchTextFieldProps?: SearchTextFieldProps;
+  searchTextFieldInputProps?: SearchTextFieldInputProps;
   handleSelect: ({ value, name }: { value: Choice[], name: string }) => void;
 }
 
@@ -121,6 +124,9 @@ const MultipleSelector: React.FC<Props> = ({
   sectionNameClassName,
   disableDropDownArrow,
   dropDownArrowClassName,
+  searchTextFieldProps,
+  dropDownArrowComponent,
+  searchTextFieldInputProps,
   handleSelect,
 }) => {
   const classes = useStyles();
@@ -212,7 +218,7 @@ const MultipleSelector: React.FC<Props> = ({
           </div>
           )}
           {!disableDropDownArrow && <div className={`${classes.expandIcon} ${dropDownArrowClassName}`}>
-            <ExpandMoreIcon style={{ fontSize: '15px' }} />
+            {dropDownArrowComponent || <ExpandMoreIcon style={{ fontSize: '15px' }} />}
           </div>}
         </button>
       </Tooltip>
@@ -232,11 +238,13 @@ const MultipleSelector: React.FC<Props> = ({
           className={popupClassName}
           itemClassName={itemClassName}
           sectionNameClassName={sectionNameClassName}
+          searchTextFieldProps={searchTextFieldProps}
+          searchTextFieldInputProps={searchTextFieldInputProps}
         />
       )}
     </div>
   );
 };
 
-export type { ChoiceSections, Choice };
+export type { ChoiceSections, Choice, SearchTextFieldProps, SearchTextFieldInputProps };
 export default MultipleSelector;
