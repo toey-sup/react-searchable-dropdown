@@ -11,7 +11,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import useDebounce from '../useDebounce';
 import List from '../ListWIthId';
 import { DEFAULT_SCROLL_DIV_HEIGHT, DEFAULT_ITEM_HEIGHT } from '../const';
-import SelectorItem, { ChoiceSection } from './SectionItem';
+import SelectorItem, { Choice, ChoiceSection } from './SectionItem';
 
 
 const useStyles = makeStyles({
@@ -68,7 +68,7 @@ export interface Props {
   searchTextfieldProps?: SearchTextFieldProps;
   searchTextFieldInputProps?: SearchTextFieldInputProps;
   handleClose: () => void;
-  handleSelect: (value: { [key: string]: any }) => void;
+  handleSelect: (value: Choice) => void;
 }
 
 const SelectorPopup: React.FC<Props> = ({

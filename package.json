@@ -1,6 +1,6 @@
 {
   "name": "the-ultimate-and-the-best-react-searchable-dropdown",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "library for react dropdown",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
