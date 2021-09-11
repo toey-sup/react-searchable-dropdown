@@ -4,7 +4,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SelectorPopup, { SearchTextFieldInputProps, SearchTextFieldProps } from './SelectorPopup';
-import { ChoiceSections, Choice } from './SectionItem';
+import { ChoiceSection, Choice } from './SectionItem';
 
 const useStyles = makeStyles({
   selectDiv: {
@@ -76,10 +76,11 @@ const useStyles = makeStyles({
 export interface Props {
   label: string;
   popUpKey: string;
-  choiceSections: ChoiceSections[];
-  selectDivPropsStyle?: { [key:string]: any};
-  style?: { [key:string]: any};
+  choiceSections: ChoiceSection[];
+  style?: React.CSSProperties;
   className?: any,
+  selectDivClassName?: string;
+  selectDivPropsStyle?: React.CSSProperties;
   handleSelect: ({ value, name }: { value: Choice, name: string }) => void;
   labelPrefix?: string;
   name?: string;
@@ -91,7 +92,6 @@ export interface Props {
   itemHeight?: number;
   scrollDivHeight?: number;
   tooltip?: string;
-  topDivClassName?: string;
   popupClassName?: string;
   sectionNameClassName?: string;
   itemClassName?: string;
@@ -110,16 +110,16 @@ const Selector: React.FC<Props> = ({
   error,
   choiceSections,
   placeholder,
-  selectDivPropsStyle,
-  className,
   style,
+  className,
+  selectDivPropsStyle,
+  selectDivClassName,
   disable,
   id,
   disablePortal,
   itemHeight,
   scrollDivHeight,
   tooltip,
-  topDivClassName,
   popupClassName,
   itemClassName,
   sectionNameClassName,
@@ -142,7 +142,7 @@ const Selector: React.FC<Props> = ({
   };
 
   return (
-    <div ref={selectFieldRef} style={{ width: '100%', display: 'flex', ...style }} className={topDivClassName}>
+    <div ref={selectFieldRef} style={{ width: '100%', display: 'flex', ...style }} className={className}>
       <Tooltip
         title={tooltip ?? `${label ? `${labelPrefix || ''} ${label}` : ''}`}
         key={tooltip ?? `${labelPrefix || ''} ${label}`}
@@ -159,7 +159,7 @@ const Selector: React.FC<Props> = ({
           ${open ? classes.openSelect : ''}
           ${error ? classes.errorDiv : ''}
           ${disable ? classes.disabled : ''}
-          ${className}
+          ${selectDivClassName}
         `}
           style={selectDivPropsStyle}
           onClick={() => setOpen(true)}
@@ -210,5 +210,5 @@ const Selector: React.FC<Props> = ({
   );
 };
 
-export type { Choice, ChoiceSections };
+export type { Choice, ChoiceSection };
 export default Selector;

@@ -76,7 +76,7 @@ export interface Choice {
   [key: string]: any;
 }
 
-export interface ChoiceSections {
+export interface ChoiceSection {
   choices: Choice[];
   sectionName?: string;
   sectionPrefix?: any;
