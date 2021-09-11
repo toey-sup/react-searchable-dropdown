@@ -78,7 +78,7 @@ export interface Props {
   popUpKey: string;
   choiceSections: ChoiceSection[];
   style?: React.CSSProperties;
-  className?: any,
+  className?: string,
   selectDivClassName?: string;
   selectDivPropsStyle?: React.CSSProperties;
   handleSelect: ({ value, name }: { value: Choice, name: string }) => void;
