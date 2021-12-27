@@ -16,7 +16,7 @@ export default {
     name: 'Choice',
     placeholder: 'please select a choice',
     id: 'MultipleSelector-id',
-    handleSelect: ({ value, name }) => { console.log({ value, name })},
+    handleSelect: () => { return null; },
     style: { width: '300px' }
   },
   argTypes: {
@@ -31,7 +31,7 @@ const Template: Story<Props> = (args) => {
     <MultipleSelector
       {...args}
       label={(checkedChoices.length <= 1) ? checkedChoices[0]?.label || '' : `${checkedChoices[0]?.label} & ${checkedChoices.length - 1} More`}
-      handleSelect={({ value, name }: { value: Choice[], name: string}) => { setCheckedChoices(value); console.log({ value, name })}}
+      handleSelect={({ value, name }: { value: Choice[], name: string}) => { setCheckedChoices(value); }}
       checkedChoices={checkedChoices}
       />
   );
@@ -41,10 +41,10 @@ export const NormalMultipleSelector = Template.bind({});
 NormalMultipleSelector.args = { ...Template.args };
 
 export const MultipleSelectorWithSingleChoice = Template.bind({});
-MultipleSelectorWithSingleChoice.args = { ...Template.args, choiceSections:[{ sectionName: 'Single Choice', choices: [{ label: 'Special One', singleChoice: true }]}, { sectionName: 'Multiple Choice', choices: choices }]};
+MultipleSelectorWithSingleChoice.args = { ...Template.args, choiceSections:[{ sectionName: 'Single Choice', choices: [{ label: 'Special One', singleChoice: true }]}, { sectionName: 'Multiple Choice', choices }]};
 
 export const MultipleSelectorWithSectionPrefix = Template.bind({});
-MultipleSelectorWithSectionPrefix.args = { ...Template.args, choiceSections: [{ sectionName: 'Single Choice', sectionPrefix: 'single-prefix', choices: [{ label: 'Special One', singleChoice: true }]}, { sectionName: 'Multiple Choice', choices: choices, sectionPrefix: 'mul-prefix' }] };
+MultipleSelectorWithSectionPrefix.args = { ...Template.args, choiceSections: [{ sectionName: 'Single Choice', sectionPrefix: 'single-prefix', choices: [{ label: 'Special One', singleChoice: true }]}, { sectionName: 'Multiple Choice', choices, sectionPrefix: 'mul-prefix' }] };
 
 export const MultipleSelectorWithUsedChoices = Template.bind({});
 MultipleSelectorWithUsedChoices.args = { ...Template.args, choicesSections: [{ choices: words.map((word, index) => ({ label: word, id: word, used: index < 10 })) }] };

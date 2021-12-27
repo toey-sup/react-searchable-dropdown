@@ -16,7 +16,7 @@ export default {
     name: 'Choice',
     placeholder: 'please select a choice',
     id: 'Selector-id',
-    handleSelect: ({ value, name }) => { console.log({ value, name })},
+    handleSelect: () => { return null; },
     style: { width: '300px' }
   },
   argTypes: {
@@ -31,7 +31,7 @@ const Template: Story<Props> = (args) => {
     <Selector
       {...args}
       label={label}
-      handleSelect={({ value, name }) => { setLabel(value.label); console.log({ value, name }); }}
+      handleSelect={({ value }) => { setLabel(value.label); }}
     />
   );
 };
@@ -40,7 +40,7 @@ export const NormalSelector = Template.bind({});
 NormalSelector.args = { ...Template.args };
 
 export const SelectorWithSectionPrefix = Template.bind({});
-SelectorWithSectionPrefix.args = { ...Template.args, choiceSections: [{ sectionName: 'Special Choice', sectionPrefix: 'Special', choices: [{ label: 'Special One'}, { label: 'Special Two'}, { label: 'Special Three'}, { label: 'Special Four'}]}, { sectionName: 'Normal Choice', choices: choices, sectionPrefix: 'Normal' }] };
+SelectorWithSectionPrefix.args = { ...Template.args, choiceSections: [{ sectionName: 'Special Choice', sectionPrefix: 'Special', choices: [{ label: 'Special One'}, { label: 'Special Two'}, { label: 'Special Three'}, { label: 'Special Four'}]}, { sectionName: 'Normal Choice', choices, sectionPrefix: 'Normal' }] };
 
 export const SelectorWithUsedChoices = Template.bind({});
 SelectorWithUsedChoices.args = { ...Template.args, choiceSections: [{ choices: words.map((word, index) => ({ label: word, id: word, used: index < 10 })) }] };

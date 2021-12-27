@@ -139,9 +139,9 @@ const MultipleSelector: React.FC<Props> = ({
     setOpen(false);
     if (submitChoices) {
       let selectedChoice = Object.keys(submitChoices).reduce((acc, choiceLabel) => {
-        const selectedChoice = submitChoices[choiceLabel];
+        const choice = submitChoices[choiceLabel];
         return (
-          selectedChoice ? [...acc, selectedChoice] : acc
+          choice ? [...acc, choice] : acc
         )
       }, [])
       // handle if previously user select single choice
