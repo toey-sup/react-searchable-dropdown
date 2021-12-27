@@ -73,7 +73,7 @@ const useStyles = makeStyles({
   },
 });
 
-export interface Props {
+export interface SelectorProps {
   label: string;
   popUpKey: string;
   choiceSections: ChoiceSection[];
@@ -102,7 +102,7 @@ export interface Props {
   searchTextFieldInputProps?: SearchTextFieldInputProps;
 }
 
-const Selector: React.FC<Props> = ({
+export const Selector: React.FC<SelectorProps> = ({
   label,
   labelPrefix,
   name,
@@ -211,4 +211,3 @@ const Selector: React.FC<Props> = ({
 };
 
 export type { Choice, ChoiceSection };
-export default Selector;

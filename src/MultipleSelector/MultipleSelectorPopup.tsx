@@ -13,7 +13,7 @@ import useDebounce from '../useDebounce';
 import List from '../ListWIthId';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { DEFAULT_SCROLL_DIV_HEIGHT, DEFAULT_ITEM_HEIGHT } from '../const';
-import MultipleSectionItem, { ChoiceSection, Choice } from './MultipleSectionItem';
+import MultipleSectionItem, { MultipleChoiceSection, MultipleChoice } from './MultipleSectionItem';
 
 const useStyles = makeStyles({
   popOver: {
@@ -93,10 +93,10 @@ export type SearchTextFieldProps = TextFieldProps;
 
 export interface Props {
   name: string;
-  chosenChoice: {[key:string]: Choice | null};
+  chosenChoice: {[key:string]: MultipleChoice | null};
   popUpKey: string;
   anchorEl: HTMLDivElement;
-  choiceSections: ChoiceSection[];
+  choiceSections: MultipleChoiceSection[];
   id?: string;
   itemHeight?: number;
   scrollDivHeight?: number;
@@ -105,8 +105,8 @@ export interface Props {
   sectionNameClassName?: string;
   searchTextFieldProps?: SearchTextFieldProps;
   searchTextFieldInputProps?: SearchTextFieldInputProps;
-  handleClose: (chosenChoice: {[key:string]: Choice | null}) => void;
-  handleSelect: (value: Choice, isCheck: boolean) => void;
+  handleClose: (chosenChoice: {[key:string]: MultipleChoice | null}) => void;
+  handleSelect: (value: MultipleChoice, isCheck: boolean) => void;
   handleClearAll: () => void;
 }
 
@@ -141,7 +141,7 @@ const MultipleSelectorPopup: React.FC<Props> = ({
     .filter((value) => Boolean(value))
     .length;
 
-  const filterChoices = (section: ChoiceSection, searchString: string) => {
+  const filterChoices = (section: MultipleChoiceSection, searchString: string) => {
     const sectionChoices = section.choices.reduce((acc, choice) => {
       if (new RegExp(`${searchString.replace(/\[|\]|\(|\)|\+|-|\*|\\|\?|\^|\$/g, (e) => (`\\${e}`))}`, 'i').test(choice.label)) {
         return [...acc, { ...choice, sectionPrefix: section.sectionPrefix }];
@@ -155,7 +155,7 @@ const MultipleSelectorPopup: React.FC<Props> = ({
   };
 
   const choices = choiceSections
-    .reduce((acc, section: ChoiceSection) => {
+    .reduce((acc, section: MultipleChoiceSection) => {
       const filteredSection = filterChoices(section, debouncedSearchWord);
       return filteredSection ? [...acc, ...filteredSection] : acc;
     }, []);

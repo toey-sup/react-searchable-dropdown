@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Story } from "@storybook/react";
-import MultipleSelector, { Props, Choice } from "./MultipleSelector";
+import { MultipleSelector, MultipleSelectorProps, MultipleChoice } from "./MultipleSelector";
 import { Meta } from "@storybook/react/types-6-0";
 import { words } from '../../.storybook/const';
 
-const choices: Choice[] = words.map((word) => ({ label: word, id: word }));
+const choices: MultipleChoice[] = words.map((word) => ({ label: word, id: word }));
 
 export default {
   title: "Components/MultipleSelector",
@@ -22,16 +22,16 @@ export default {
   argTypes: {
     handleSelect: { action: 'clicked' },
   }
-} as Meta<Props>;
+} as Meta<MultipleSelectorProps>;
 
 
-const Template: Story<Props> = (args) => {
-  const [checkedChoices, setCheckedChoices] = useState<Choice[]>([]);
+const Template: Story<MultipleSelectorProps> = (args) => {
+  const [checkedChoices, setCheckedChoices] = useState<MultipleChoice[]>([]);
   return (
     <MultipleSelector
       {...args}
       label={(checkedChoices.length <= 1) ? checkedChoices[0]?.label || '' : `${checkedChoices[0]?.label} & ${checkedChoices.length - 1} More`}
-      handleSelect={({ value, name }: { value: Choice[], name: string}) => { setCheckedChoices(value); }}
+      handleSelect={({ value }: { value: MultipleChoice[], name: string}) => { setCheckedChoices(value); }}
       checkedChoices={checkedChoices}
       />
   );

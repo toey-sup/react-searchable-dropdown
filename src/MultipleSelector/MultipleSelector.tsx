@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Tooltip from '@material-ui/core/Tooltip';
-import { ChoiceSection, Choice } from './MultipleSectionItem';
+import { MultipleChoiceSection, MultipleChoice } from './MultipleSectionItem';
 import MultipleSelectorPopup, { SearchTextFieldProps, SearchTextFieldInputProps } from './MultipleSelectorPopup';
 
 const useStyles = makeStyles({
@@ -76,15 +76,15 @@ const useStyles = makeStyles({
   },
 });
 
-export interface Props {
+export interface MultipleSelectorProps {
   label: string;
   popUpKey: string;
-  choiceSections: ChoiceSection[];
+  choiceSections: MultipleChoiceSection[];
   name?: string;
   error?: boolean;
   placeholder?: string;
   disable?:boolean;
-  checkedChoices?: Choice[];
+  checkedChoices?: MultipleChoice[];
   id?: string;
   style?: React.CSSProperties;
   className?: string,
@@ -100,10 +100,10 @@ export interface Props {
   dropDownArrowComponent?: HTMLElement;
   searchTextFieldProps?: SearchTextFieldProps;
   searchTextFieldInputProps?: SearchTextFieldInputProps;
-  handleSelect: ({ value, name }: { value: Choice[], name: string }) => void;
+  handleSelect: ({ value, name }: { value: MultipleChoice[], name: string }) => void;
 }
 
-const MultipleSelector: React.FC<Props> = ({
+export const MultipleSelector: React.FC<MultipleSelectorProps> = ({
   label,
   name,
   popUpKey,
@@ -131,11 +131,11 @@ const MultipleSelector: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
   const [open, setOpen] = useState<boolean>(false);
-  const [chosenChoice, setChosenChoice] = useState<{[key: string]: Choice | null}>({});
-  const [mulChoiceSections, setMulChoiceSections] = useState<ChoiceSection[]>([...choiceSections]);
+  const [chosenChoice, setChosenChoice] = useState<{[key: string]: MultipleChoice | null}>({});
+  const [mulChoiceSections, setMulChoiceSections] = useState<MultipleChoiceSection[]>([...choiceSections]);
   const selectFieldRef = useRef<HTMLDivElement>(null);
 
-  const handleClosePopup = useCallback((submitChoices: {[key: string]: Choice | null}) => {
+  const handleClosePopup = useCallback((submitChoices: {[key: string]: MultipleChoice | null}) => {
     setOpen(false);
     if (submitChoices) {
       let selectedChoice = Object.keys(submitChoices).reduce((acc, choiceLabel) => {
@@ -156,7 +156,7 @@ const MultipleSelector: React.FC<Props> = ({
     }
   }, [checkedChoices, handleSelect, name]);
 
-  const handleSelectChoice = (value: Choice, isCheck: boolean) => {
+  const handleSelectChoice = (value: MultipleChoice, isCheck: boolean) => {
     setChosenChoice({ ...chosenChoice, [`${value.id ?? value.label}`]: (isCheck || value.singleChoice) ? value : null });
     if (value.singleChoice) {
       handleClosePopup({ [`${value.singleChoice ? 'Single -' : ''}${value.id ?? value.label}`]: (isCheck || value.singleChoice) ? value : null });
@@ -168,7 +168,7 @@ const MultipleSelector: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    const initChosenChoice: { [key: string]: Choice } = {};
+    const initChosenChoice: { [key: string]: MultipleChoice } = {};
     if (checkedChoices && checkedChoices[0] && !checkedChoices[0].singleChoice) {
       checkedChoices.forEach((choice) => {
         if (choice.label.trim().length > 0) {
@@ -246,5 +246,4 @@ const MultipleSelector: React.FC<Props> = ({
   );
 };
 
-export type { ChoiceSection, Choice, SearchTextFieldProps, SearchTextFieldInputProps };
-export default MultipleSelector;
+export type { MultipleChoiceSection, MultipleChoice, SearchTextFieldProps, SearchTextFieldInputProps };

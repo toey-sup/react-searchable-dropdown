@@ -67,7 +67,7 @@ const useStyles = makeStyles({
   },
 });
 
-export interface Choice {
+export interface MultipleChoice {
   label: string;
   used?: boolean;
   checked?: boolean;
@@ -76,21 +76,21 @@ export interface Choice {
   [key: string]: any;
 }
 
-export interface ChoiceSection {
-  choices: Choice[];
+export interface MultipleChoiceSection {
+  choices: MultipleChoice[];
   sectionName?: string;
   sectionPrefix?: string;
 }
 
-export interface Props {
-  choice: Choice;
+export interface MultipleSectionItemProps {
+  choice: MultipleChoice;
   checked: boolean;
   id?: string;
   className?: string;
-  handleSelect: (choice: Choice, isCheck: boolean) => void;
+  handleSelect: (choice: MultipleChoice, isCheck: boolean) => void;
 }
 
-const MultipleSectionItem: FC<Props> = ({
+const MultipleSectionItem: FC<MultipleSectionItemProps> = ({
   choice,
   checked,
   id,

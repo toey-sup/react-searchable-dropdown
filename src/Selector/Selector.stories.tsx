@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Story } from "@storybook/react";
 import { Meta } from "@storybook/react/types-6-0";
-import Selector, { Props, Choice } from "./Selector";
+import { Selector, SelectorProps, Choice } from "./Selector";
 import { words } from '../../.storybook/const';
 
 const choices: Choice[] = words.map((word) => ({ label: word, id: word }));
@@ -22,10 +22,10 @@ export default {
   argTypes: {
     handleSelect: { action: 'clicked' },
   }
-} as Meta<Props>;
+} as Meta<SelectorProps>;
 
 
-const Template: Story<Props> = (args) => {
+const Template: Story<SelectorProps> = (args) => {
   const [label, setLabel] = useState<string>('');
   return (
     <Selector

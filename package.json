@@ -1,6 +1,6 @@
 {
   "name": "toey-react-dropdown",
-  "version": "1.0.5",
+  "version": "1.0.0",
   "description": "library for react dropdown",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
@@ -16,7 +16,6 @@
     "build-storybook": "build-storybook",
     "build": "rollup -c",
     "prepare" : "yarn run build",
-    "prepublishOnly" : "yarn run lint",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "test": "jest",
