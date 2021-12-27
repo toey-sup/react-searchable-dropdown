@@ -1,9 +1,9 @@
 {
   "name": "toey-react-dropdown",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "library for react dropdown",
-  "main": "lib/index",
-  "types": "lib/index",
+  "main": "lib/src/index.js",
+  "typings": "lib/src/index.d.ts",
   "repository": "https://github.com/a526735a/react-searchable-dropdown.git",
   "author": "supanat",
   "license": "MIT",
