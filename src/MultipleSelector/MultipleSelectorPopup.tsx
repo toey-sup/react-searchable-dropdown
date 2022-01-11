@@ -215,7 +215,7 @@ const MultipleSelectorPopup: React.FC<Props> = ({
                     <MultipleSectionItem
                       key={`item-${index + 1}`}
                       choice={choice}
-                      checked={Boolean(chosenChoice[`${choice.singleChoice ? 'Single -' : ''}${choice?.id ?? choice.label}`])}
+                      checked={Boolean(chosenChoice[`${choice.singleChoice ? 'Single -' : ''}${choice?.id ?? choice.label}`] || choice.checked)}
                       handleSelect={handleSelect}
                       className={itemClassName}
                       id={id}
