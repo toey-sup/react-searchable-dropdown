@@ -13,44 +13,6 @@ import List from '../ListWIthId';
 import { DEFAULT_SCROLL_DIV_HEIGHT, DEFAULT_ITEM_HEIGHT } from '../const';
 import SelectorItem, { Choice, ChoiceSection } from './SectionItem';
 
-
-const useStyles = makeStyles({
-  popUp: (props: { selectDivWidth: number }) => ({
-    zIndex: 9999,
-    '& .MuiPaper-root': {
-      width: props.selectDivWidth,
-      zIndex: 11,
-      backgroundColor: 'white',
-      height: 'fit-content',
-      display: 'flex',
-      flexFlow: 'wrap column',
-      borderRadius: 4,
-      boxShadow:
-          '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-    },
-  }),
-  searchDiv: {
-    '& .MuiInput-input': {
-      padding: '9px 15px',
-    },
-  },
-  input: {
-    '&::placeholder': {
-      fontStyle: 'italic',
-    },
-  },
-  sectionName: {
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'left',
-    height: '100%',
-    padding: '0px 16px',
-    backgroundColor: '#F7F7F7',
-    borderTop: '1px solid #F3F3F3',
-    borderBottom: '1px solid #F3F3F3',
-  },
-});
-
 export type SearchTextFieldInputProps = Partial<InputProps> | Partial<FilledInputProps> | Partial<OutlinedInputProps>;
 export type SearchTextFieldProps = TextFieldProps;
 
@@ -87,7 +49,6 @@ const SelectorPopup: React.FC<Props> = ({
   handleClose,
   handleSelect,
 }) => {
-  const classes = useStyles({ selectDivWidth: anchorEl?.clientWidth });
   const [searchWord, setSearchWord] = useState<string>('');
   const debouncedSearchWord = useDebounce(searchWord, 100);
 
@@ -97,25 +58,27 @@ const SelectorPopup: React.FC<Props> = ({
 
   const filterChoices = (section: ChoiceSection, searchString: string) => {
     const sectionChoices = section.choices.reduce((acc, choice) => {
-      if (new RegExp(`${searchString.replace(/\[|\]|\(|\)|\+|-|\*|\\|\?|\^|\$/g, (e) => (`\\${e}`))}`, 'i').test(choice.label)) {
+      if (
+        new RegExp(`${searchString.replace(/\[|\]|\(|\)|\+|-|\*|\\|\?|\^|\$/g, (e) => `\\${e}`)}`, 'i').test(
+          choice.label,
+        )
+      ) {
         return [...acc, { ...choice, sectionPrefix: section.sectionPrefix }];
       }
       return acc;
     }, []);
     if (sectionChoices.length > 0) {
-      return [...section.sectionName ? [`${section.sectionName} (${sectionChoices.length})`] : [], ...sectionChoices];
+      return [...(section.sectionName ? [`${section.sectionName} (${sectionChoices.length})`] : []), ...sectionChoices];
     }
     return null;
   };
 
-  const choices = choiceSections
-    .reduce((acc, section: ChoiceSection) => {
-      const filteredSection = filterChoices(section, debouncedSearchWord);
-      return filteredSection ? [...acc, ...filteredSection] : acc;
-    }, []);
+  const choices = choiceSections.reduce((acc, section: ChoiceSection) => {
+    const filteredSection = filterChoices(section, debouncedSearchWord);
+    return filteredSection ? [...acc, ...filteredSection] : acc;
+  }, []);
 
-  const listHeight = (choices.length * itemHeight) > scrollDivHeight
-    ? scrollDivHeight : choices.length * itemHeight;
+  const listHeight = choices.length * itemHeight > scrollDivHeight ? scrollDivHeight : choices.length * itemHeight;
 
   return (
     <Popover
@@ -133,16 +96,20 @@ const SelectorPopup: React.FC<Props> = ({
         vertical: 'top',
         horizontal: 'center',
       }}
-      className={`${classes.popUp} ${className}`}
+      className={`${className}`}
     >
       <TextField
         fullWidth
         placeholder="Search"
-        className={classes.searchDiv}
+        className={''}
         InputProps={{
           disableUnderline: true,
-          classes: { input: classes.input },
-          endAdornment: <InputAdornment position="start"><SearchIcon style={{ fontSize: '18px' }} /></InputAdornment>,
+          className: 'border-b px-4 py-1 placeholder-italic',
+          endAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon style={{ fontSize: '18px' }} />
+            </InputAdornment>
+          ),
           ...searchTextFieldInputProps,
         }}
         onChange={handleSeaching}
@@ -162,14 +129,17 @@ const SelectorPopup: React.FC<Props> = ({
         {({ index, style }) => {
           const choice = choices[index];
           return (
-          <div id={`${id}-${index}-choice-div`} style={{ ...style, height: itemHeight }}>
-            {(typeof choice === 'string')
-              ? <Typography className={`${classes.sectionName} ${sectionNameClassName}`}>{choice}</Typography>
-              : (
+            <div id={`${id}-${index}-choice-div`} style={{ ...style, height: itemHeight }}>
+              {typeof choice === 'string' ? (
+                <Typography className={`flex items-center h-full px-4 bg-gray-100 ${sectionNameClassName}`}>
+                  {choice}
+                </Typography>
+              ) : (
                 <SelectorItem id={id} choice={choice} handleSelect={handleSelect} className={itemClassName} />
               )}
-          </div>
-        )}}
+            </div>
+          );
+        }}
       </List>
     </Popover>
   );
