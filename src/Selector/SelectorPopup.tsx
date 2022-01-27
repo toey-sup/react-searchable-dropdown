@@ -101,7 +101,6 @@ const SelectorPopup: React.FC<Props> = ({
       <TextField
         fullWidth
         placeholder="Search"
-        className={''}
         InputProps={{
           disableUnderline: true,
           className: 'border-b px-4 py-1 placeholder-italic',
@@ -115,6 +114,7 @@ const SelectorPopup: React.FC<Props> = ({
         onChange={handleSeaching}
         id={`${id}-seach-field`}
         autoComplete="off"
+        autoFocus
         {...searchTextfieldProps}
       />
       <List

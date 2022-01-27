@@ -1,71 +1,7 @@
-import {
-  FC, useState, useRef, useEffect,
-} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { FC } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
-
-const useStyles = makeStyles({
-  sectionName: {
-    backgroundColor: '#F7F7F7',
-    borderTop: '1px solid #F3F3F3',
-    borderBottom: '1px solid #F3F3F3',
-    padding: '8px 16px',
-  },
-  choice: {
-    cursor: 'pointer',
-    position: 'relative',
-    alignItems: 'center',
-    display: 'flex',
-    height: '100%',
-    padding: '0px 16px',
-    '&:hover': {
-      backgroundColor: '#F8F8F8',
-      '& $label': {
-        color: '#828282',
-      },
-    },
-  },
-  usedChoice: {
-    cursor: 'default',
-    '& p': {
-      color: '#F3F3F3',
-    },
-    '&:hover': {
-      backgroundColor: 'white !important',
-      '& $label': {
-        color: '#F3F3F3',
-      },
-    },
-  },
-  checkbox: {
-    padding: 0,
-    marginRight: '10px',
-  },
-  line: (props: { lineWidth: number }) => ({
-    width: props.lineWidth,
-    color: '#F3F3F3',
-    borderColor: '#F3F3F3',
-    backgroundColor: '#F3F3F3',
-    borderBlockStartStyle: 'none',
-    borderBlockStartColor: '#F3F3F3',
-    position: 'absolute',
-  }),
-  prefix: {
-    color: '#63B178',
-    whiteSpace: 'break-spaces',
-    fontStyle: 'italic',
-    userSelect: 'none',
-    marginRight: '10px',
-  },
-  label: {
-    userSelect: 'none',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-  },
-});
 
 export interface MultipleChoice {
   label: string;
@@ -90,24 +26,13 @@ export interface MultipleSectionItemProps {
   handleSelect: (choice: MultipleChoice, isCheck: boolean) => void;
 }
 
-const MultipleSectionItem: FC<MultipleSectionItemProps> = ({
-  choice,
-  checked,
-  id,
-  className,
-  handleSelect,
-}) => {
-  const [lineWidth, setLineWidth] = useState<number>(0);
-  const labelRef = useRef<HTMLParagraphElement>(null);
-  const classes = useStyles({ lineWidth });
-
-  useEffect(() => {
-    if (labelRef.current) setLineWidth(labelRef.current.clientWidth + 20);
-  }, []);
+const MultipleSectionItem: FC<MultipleSectionItemProps> = ({ choice, checked, id, className, handleSelect }) => {
+  const usedStyle = 'text-gray-300 cursor-default';
+  const defaultStyle = 'cursor-pointer hover:bg-gray-100';
 
   return (
     <Tooltip
-      title={<Typography style={{ whiteSpace: 'pre-line' }}>{`${choice?.sectionPrefix || ''} ${choice?.label}\n ${choice?.description ?? ''}`}</Typography>}
+      title={<Typography style={{ whiteSpace: 'pre-line' }}>{choice?.description}</Typography>}
       key={`${choice?.sectionPrefix || ''} ${choice?.label}`}
       enterDelay={300}
       leaveDelay={0}
@@ -115,36 +40,35 @@ const MultipleSectionItem: FC<MultipleSectionItemProps> = ({
       interactive
       placement="right-start"
       arrow
+      disableHoverListener={!choice?.description}
     >
       <div
         key={choice?.fieldName || choice?.label}
-        className={`${classes.choice}  ${(choice.used) ? classes.usedChoice : ''} ${className}`}
+        className={`flex flex-row h-full pl-4 items-center ${choice?.used ? usedStyle : defaultStyle} ${className}`}
         onClick={() => {
-          if (!choice.used) handleSelect(choice, !checked);
+          console.log(choice.used);
+          if (!choice?.used) handleSelect(choice, !checked);
         }}
-        id={`${id}${(choice?.sectionName) ? `-${choice?.sectionName}` : ''}-${choice?.label}`}
+        id={`${id}${choice?.sectionName ? `-${choice?.sectionName}` : ''}-${choice?.label}`}
         aria-hidden="true"
       >
         {!choice.singleChoice && (
-        <Checkbox
-          color="primary"
-          checked={checked}
-          disableRipple
-          disableFocusRipple
-          disableTouchRipple
-          className={classes.checkbox}
-          size="small"
-        />
+          <Checkbox
+            color="primary"
+            checked={checked}
+            disableRipple
+            disableFocusRipple
+            disableTouchRipple
+            style={{
+              padding: 0,
+              height: 'fit-content',
+              marginRight: '0.5rem',
+              cursor: choice?.used ? 'default' : 'pointer',
+            }}
+            size="small"
+          />
         )}
-        {choice.used && <hr className={classes.line} />}
-        {choice?.sectionPrefix && (
-        <Typography className={classes.prefix}>
-          {choice?.sectionPrefix}
-        </Typography>
-      )}
-        <Typography className={classes.label} ref={labelRef}>
-          {choice.label}
-        </Typography>
+        <Typography className="flex items-center pointer-events-none select-none">{choice.label}</Typography>
       </div>
     </Tooltip>
   );

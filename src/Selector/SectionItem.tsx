@@ -1,4 +1,4 @@
-import React, { memo, useRef } from 'react';
+import React, { memo } from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
@@ -23,8 +23,6 @@ export interface Props {
 }
 
 const SelectorItem: React.FC<Props> = memo(({ choice, id, className, handleSelect }) => {
-  const labelRef = useRef<HTMLParagraphElement>(null);
-
   const usedStyle = 'text-gray-300 cursor-default';
   const defaultStyle = 'cursor-pointer hover:bg-gray-200';
 
@@ -49,9 +47,7 @@ const SelectorItem: React.FC<Props> = memo(({ choice, id, className, handleSelec
         id={`${id}-${choice?.label}`}
         aria-hidden="true"
       >
-        <Typography className={'flex items-center'} ref={labelRef}>
-          {choice?.label}
-        </Typography>
+        <Typography className="flex items-center">{choice?.label}</Typography>
       </div>
     </Tooltip>
   );
