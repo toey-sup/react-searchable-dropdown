@@ -51,18 +51,18 @@ const SelectButton: React.FC<SelectButtonProps> = ({
         id={`${id}-select-button`}
         disabled={disable}
       >
-        <div className={`w-full flex pr-5 ${disable ? 'text-transparent' : ''}`}>
+        <div className={`w-full flex pr-5`}>
           {label ? (
-            <Typography variant="body1" noWrap>
+            <Typography variant="body1" noWrap style={{...disable ? { color: 'transparent'} : {}}}>
               {label}
             </Typography>
           ) : (
-            <Typography variant="body1" style={{ fontStyle: 'italic', color: 'gray' }}>
+            <Typography variant="body1" style={{ fontStyle: 'italic', color: disable ? 'transparent' : 'gray' }}>
               {placeholder}
             </Typography>
           )}
         </div>
-        {dropDownArrowComponent || <ExpandMoreIcon style={{ fontSize: '15px' }} className={dropDownArrowClassName} />}
+        {dropDownArrowComponent || <ExpandMoreIcon style={{ fontSize: '15px', ...disable ? {color: 'transparent' } : {} }} className={dropDownArrowClassName} />}
       </button>
     </Tooltip>
   );
