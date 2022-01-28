@@ -6,7 +6,6 @@ import { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
 import { FilledInputProps } from '@material-ui/core/FilledInput';
 import { InputProps } from '@material-ui/core/Input';
 import SearchIcon from '@material-ui/icons/Search';
-import Divider from '@material-ui/core/Divider';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import useDebounce from '../useDebounce';
 import List from '../ListWIthId';
@@ -120,11 +119,11 @@ const MultipleSelectorPopup: React.FC<Props> = ({
               fullWidth
               placeholder="Search"
               InputProps={{
-                className: 'border-b px-4 py-1 placeholder-italic',
+                className: 'border-b px-4 py-1 placeholder-italic w-full',
                 disableUnderline: true,
                 endAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon style={{ fontSize: '18px' }} />
+                    <SearchIcon style={{ fontSize: '18px', marginLeft: '5px' }} />
                   </InputAdornment>
                 ),
                 ...searchTextFieldInputProps,
@@ -173,11 +172,17 @@ const MultipleSelectorPopup: React.FC<Props> = ({
             className="bg-black flex flex-row min-w-max py-2 px-4 rounded mt-2"
             style={{ opacity: selectedChoicesLength > 1 ? 0.9 : 0 }}
           >
-            <Typography className="text-white pr-2">{`${selectedChoicesLength} ${name}s are selected`}</Typography>
+            <Typography className="text-white">{`${selectedChoicesLength} ${name}s are selected`}</Typography>
             <Typography
               onClick={handleClearAll}
               id={`${id}-clear-button`}
-              className="text-red-500 border-l-2 pl-2 cursor-pointer"
+              style={{
+                color: 'red',
+                marginLeft: 'auto',
+                borderLeft: '2px solid white',
+                cursor: 'pointer',
+                paddingLeft: '0.5rem',
+              }}
             >
               Clear All
             </Typography>

@@ -31,6 +31,7 @@ const SelectButton: React.FC<SelectButtonProps> = ({
   dropDownArrowComponent,
   setOpen,
 }) => {
+  const disabledStyle = 'text-transparent';
   return (
     <Tooltip
       title={tooltip ?? label ?? ''}
@@ -43,9 +44,9 @@ const SelectButton: React.FC<SelectButtonProps> = ({
     >
       <button
         type="button"
-        className={`flex border px-4 rounded py-1 hover:border-gray-400 w-full ${open ? 'border-gray-400' : ''} ${
-          error ? 'border-red-400' : ''
-        } ${selectDivClassName || ''} ${disable ? 'bg-gray-200' : ''}`}
+        className={`flex border px-4 rounded py-1 hover:border-gray-400 w-full h-full ${
+          open ? 'border-gray-400' : ''
+        } ${error ? 'border-red-400' : ''} ${selectDivClassName || ''} ${disable ? 'bg-gray-200' : ''}`}
         style={selectDivPropsStyle}
         onClick={() => setOpen(true)}
         id={`${id}-select-button`}
@@ -53,16 +54,16 @@ const SelectButton: React.FC<SelectButtonProps> = ({
       >
         <div className="w-full flex pr-5">
           {label ? (
-            <Typography variant="body1" noWrap className={`${disable ? 'text-transparent' : ''}`}>
+            <Typography variant="body1" noWrap className={`${disable ? disabledStyle : ''}`}>
               {label}
             </Typography>
           ) : (
-            <Typography variant="body1" className={`italic ${disable ? 'text-transparent' : 'text-gray-400'}`}>
+            <Typography variant="body1" className={`italic ${disable ? disabledStyle : 'text-gray-400'}`}>
               {placeholder}
             </Typography>
           )}
         </div>
-        <div className={`${dropDownArrowClassName || ''} ${disable ? 'text-transparent' : ''} `}>
+        <div className={`${dropDownArrowClassName || ''} ${disable ? disabledStyle : ''} `}>
           {dropDownArrowComponent || <ExpandMoreIcon style={{ fontSize: '15px' }} />}
         </div>
       </button>

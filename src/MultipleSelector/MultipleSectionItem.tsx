@@ -44,6 +44,7 @@ const MultipleSectionItem: FC<MultipleSectionItemProps> = ({ choice, checked, id
     >
       <div
         key={choice?.fieldName || choice?.label}
+        style={{ ...(choice?.used ? { color: 'gray' } : {}) }}
         className={`flex flex-row h-full pl-4 items-center ${choice?.used ? usedStyle : defaultStyle} ${className}`}
         onClick={() => {
           console.log(choice.used);
