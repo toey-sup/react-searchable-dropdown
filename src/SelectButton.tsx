@@ -57,7 +57,7 @@ const SelectButton: React.FC<SelectButtonProps> = ({
               {label}
             </Typography>
           ) : (
-            <Typography variant="body1" className="italic text-gray-400">
+            <Typography variant="body1" style={{ fontStyle: 'italic', color: 'gray' }}>
               {placeholder}
             </Typography>
           )}
