@@ -43,7 +43,7 @@ const SelectButton: React.FC<SelectButtonProps> = ({
     >
       <button
         type="button"
-        className={`flex border px-4 rounded py-1 hover:border-gray-400 w-full h-full ${
+        className={`flex items-center border px-4 rounded py-1 hover:border-gray-400 w-full h-full ${
           open ? 'border-gray-400' : ''
         } ${error ? 'border-red-400' : ''} ${selectDivClassName || ''} ${disable ? 'bg-gray-200' : ''}`}
         style={selectDivPropsStyle}
@@ -51,20 +51,18 @@ const SelectButton: React.FC<SelectButtonProps> = ({
         id={`${id}-select-button`}
         disabled={disable}
       >
-        <div className="w-full flex pr-5">
+        <div className={`w-full flex pr-5 ${disable ? 'text-transparent' : ''}`}>
           {label ? (
-            <Typography variant="body1" noWrap className={`${disable ? 'text-transparent' : ''}`}>
+            <Typography variant="body1" noWrap>
               {label}
             </Typography>
           ) : (
-            <Typography variant="body1" className={`italic ${disable ? 'text-transparent' : 'text-gray-400'}`}>
+            <Typography variant="body1" className="italic text-gray-400">
               {placeholder}
             </Typography>
           )}
         </div>
-        <div className={`${dropDownArrowClassName || ''} ${disable ? 'text-transparent' : ''} `}>
-          {dropDownArrowComponent || <ExpandMoreIcon style={{ fontSize: '15px' }} />}
-        </div>
+        {dropDownArrowComponent || <ExpandMoreIcon style={{ fontSize: '15px' }} className={dropDownArrowClassName} />}
       </button>
     </Tooltip>
   );
