@@ -95,7 +95,6 @@ const SelectorPopup: React.FC<Props> = ({
         vertical: 'top',
         horizontal: 'center',
       }}
-      className={`${className}`}
     >
       <div className={className}>
         <TextField
