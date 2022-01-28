@@ -97,49 +97,51 @@ const SelectorPopup: React.FC<Props> = ({
       }}
       className={`${className}`}
     >
-      <TextField
-        fullWidth
-        placeholder="Search"
-        InputProps={{
-          disableUnderline: true,
-          className: 'border-b px-4 py-1 placeholder-italic',
-          endAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon style={{ fontSize: '18px' }} />
-            </InputAdornment>
-          ),
-          ...searchTextFieldInputProps,
-        }}
-        onChange={handleSeaching}
-        id={`${id}-seach-field`}
-        autoComplete="off"
-        autoFocus
-        {...searchTextfieldProps}
-      />
-      <List
-        height={listHeight}
-        itemCount={choices.length}
-        itemSize={itemHeight}
-        width={anchorEl?.clientWidth}
-        overscanCount={10}
-        outerId={`${id}-list-outer-div`}
-        innerId={`${id}-list-inner-div`}
-      >
-        {({ index, style }) => {
-          const choice = choices[index];
-          return (
-            <div id={`${id}-${index}-choice-div`} style={{ ...style, height: itemHeight }}>
-              {typeof choice === 'string' ? (
-                <Typography className={`flex items-center h-full px-4 bg-gray-100 ${sectionNameClassName}`}>
-                  {choice}
-                </Typography>
-              ) : (
-                <SelectorItem id={id} choice={choice} handleSelect={handleSelect} className={itemClassName} />
-              )}
-            </div>
-          );
-        }}
-      </List>
+      <div className={className}>
+        <TextField
+          fullWidth
+          placeholder="Search"
+          InputProps={{
+            disableUnderline: true,
+            className: 'border-b px-4 py-1 placeholder-italic',
+            endAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon style={{ fontSize: '18px' }} />
+              </InputAdornment>
+            ),
+            ...searchTextFieldInputProps,
+          }}
+          onChange={handleSeaching}
+          id={`${id}-seach-field`}
+          autoComplete="off"
+          autoFocus
+          {...searchTextfieldProps}
+        />
+        <List
+          height={listHeight}
+          itemCount={choices.length}
+          itemSize={itemHeight}
+          width={anchorEl?.clientWidth}
+          overscanCount={10}
+          outerId={`${id}-list-outer-div`}
+          innerId={`${id}-list-inner-div`}
+        >
+          {({ index, style }) => {
+            const choice = choices[index];
+            return (
+              <div id={`${id}-${index}-choice-div`} style={{ ...style, height: itemHeight }}>
+                {typeof choice === 'string' ? (
+                  <Typography className={`flex items-center h-full px-4 bg-gray-100 ${sectionNameClassName}`}>
+                    {choice}
+                  </Typography>
+                ) : (
+                  <SelectorItem id={id} choice={choice} handleSelect={handleSelect} className={itemClassName} />
+                )}
+              </div>
+            );
+          }}
+        </List>
+      </div>
     </Popover>
   );
 };
