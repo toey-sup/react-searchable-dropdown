@@ -27,6 +27,7 @@ export interface Props {
   scrollDivHeight?: number;
   className?: string;
   itemClassName?: string;
+  infoClassName?: string;
   sectionNameClassName?: string;
   searchTextFieldProps?: SearchTextFieldProps;
   searchTextFieldInputProps?: SearchTextFieldInputProps;
@@ -46,6 +47,7 @@ const MultipleSelectorPopup: React.FC<Props> = ({
   scrollDivHeight = DEFAULT_SCROLL_DIV_HEIGHT,
   className,
   itemClassName,
+  infoClassName,
   sectionNameClassName,
   searchTextFieldProps,
   searchTextFieldInputProps,
@@ -169,7 +171,7 @@ const MultipleSelectorPopup: React.FC<Props> = ({
             </List>
           </div>
           <div
-            className="bg-black flex flex-row min-w-max py-2 px-4 rounded mt-2"
+            className={`bg-black flex flex-row min-w-max py-2 px-4 rounded mt-2 ${infoClassName}`}
             style={{ opacity: selectedChoicesLength > 1 ? 0.9 : 0 }}
           >
             <Typography className="text-white">{`${selectedChoicesLength} ${name}s are selected`}</Typography>

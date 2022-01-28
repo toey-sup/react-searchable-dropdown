@@ -22,6 +22,7 @@ export interface MultipleSelectorProps {
   scrollDivHeight?: number;
   popupClassName?: string;
   itemClassName?: string;
+  infoClassName?: string;
   sectionNameClassName?: string;
   dropDownArrowClassName?: string;
   dropDownArrowComponent?: HTMLElement;
@@ -48,6 +49,7 @@ export const MultipleSelector: React.FC<MultipleSelectorProps> = ({
   scrollDivHeight,
   popupClassName,
   itemClassName,
+  infoClassName,
   sectionNameClassName,
   dropDownArrowClassName,
   searchTextFieldProps,
@@ -152,6 +154,7 @@ export const MultipleSelector: React.FC<MultipleSelectorProps> = ({
           handleClearAll={handleClearAll}
           className={popupClassName}
           itemClassName={itemClassName}
+          infoClassName={infoClassName}
           sectionNameClassName={sectionNameClassName}
           searchTextFieldProps={searchTextFieldProps}
           searchTextFieldInputProps={searchTextFieldInputProps}
