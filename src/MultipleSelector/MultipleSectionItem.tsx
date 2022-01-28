@@ -27,9 +27,6 @@ export interface MultipleSectionItemProps {
 }
 
 const MultipleSectionItem: FC<MultipleSectionItemProps> = ({ choice, checked, id, className, handleSelect }) => {
-  const usedStyle = 'text-gray-300 cursor-default';
-  const defaultStyle = 'cursor-pointer hover:bg-gray-100';
-
   return (
     <Tooltip
       title={<Typography style={{ whiteSpace: 'pre-line' }}>{choice?.description}</Typography>}
@@ -45,7 +42,9 @@ const MultipleSectionItem: FC<MultipleSectionItemProps> = ({ choice, checked, id
       <div
         key={choice?.fieldName || choice?.label}
         style={{ ...(choice?.used ? { color: 'gray' } : {}) }}
-        className={`flex flex-row h-full pl-4 items-center ${choice?.used ? usedStyle : defaultStyle} ${className}`}
+        className={`flex flex-row h-full pl-4 items-center ${
+          choice?.used ? 'text-gray-300 cursor-default' : 'cursor-pointer hover:bg-gray-100'
+        } ${className}`}
         onClick={() => {
           console.log(choice.used);
           if (!choice?.used) handleSelect(choice, !checked);

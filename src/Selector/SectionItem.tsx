@@ -23,9 +23,6 @@ export interface Props {
 }
 
 const SelectorItem: React.FC<Props> = memo(({ choice, id, className, handleSelect }) => {
-  const usedStyle = 'text-gray-300 cursor-default';
-  const defaultStyle = 'cursor-pointer hover:bg-gray-200';
-
   return (
     <Tooltip
       title={<Typography style={{ whiteSpace: 'pre-line' }}>{choice?.description}</Typography>}
@@ -40,7 +37,9 @@ const SelectorItem: React.FC<Props> = memo(({ choice, id, className, handleSelec
     >
       <div
         key={choice?.fieldName || choice?.label}
-        className={`flex h-full px-4 ${choice?.used ? usedStyle : defaultStyle} ${className}`}
+        className={`flex h-full px-4 ${
+          choice?.used ? 'text-gray-300 cursor-default' : 'cursor-pointer hover:bg-gray-200'
+        } ${className}`}
         onClick={() => {
           if (!choice?.used) handleSelect(choice);
         }}
