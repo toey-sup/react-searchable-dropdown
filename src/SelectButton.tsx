@@ -31,7 +31,6 @@ const SelectButton: React.FC<SelectButtonProps> = ({
   dropDownArrowComponent,
   setOpen,
 }) => {
-  const disabledStyle = 'text-transparent';
   return (
     <Tooltip
       title={tooltip ?? label ?? ''}
@@ -54,16 +53,16 @@ const SelectButton: React.FC<SelectButtonProps> = ({
       >
         <div className="w-full flex pr-5">
           {label ? (
-            <Typography variant="body1" noWrap className={`${disable ? disabledStyle : ''}`}>
+            <Typography variant="body1" noWrap className={`${disable ? 'text-transparent' : ''}`}>
               {label}
             </Typography>
           ) : (
-            <Typography variant="body1" className={`italic ${disable ? disabledStyle : 'text-gray-400'}`}>
+            <Typography variant="body1" className={`italic ${disable ? 'text-transparent' : 'text-gray-400'}`}>
               {placeholder}
             </Typography>
           )}
         </div>
-        <div className={`${dropDownArrowClassName || ''} ${disable ? disabledStyle : ''} `}>
+        <div className={`${dropDownArrowClassName || ''} ${disable ? 'text-transparent' : ''} `}>
           {dropDownArrowComponent || <ExpandMoreIcon style={{ fontSize: '15px' }} />}
         </div>
       </button>
